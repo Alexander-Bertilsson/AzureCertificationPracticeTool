@@ -16,6 +16,7 @@ import { errorHandler } from './common/middleware/error-handler.js';
 import { env } from './config/env.js';
 import { registerCertificationRoutes } from './modules/certifications/certification.routes.js';
 import { registerQuestionRoutes } from './modules/questions/question.routes.js';
+import { registerQuizSessionRoutes } from './modules/quiz-sessions/quiz-session.routes.js';
 import { registerTopicRoutes } from './modules/topics/topic.routes.js';
 import { registerWikiRoutes } from './modules/wiki/wiki.routes.js';
 
@@ -85,6 +86,7 @@ export async function buildApp(): Promise<FastifyInstance> {
       registerTopicRoutes(v1);
       registerWikiRoutes(v1);
       registerQuestionRoutes(v1);
+      registerQuizSessionRoutes(v1);
       done();
     },
     { prefix: '/api/v1' },
