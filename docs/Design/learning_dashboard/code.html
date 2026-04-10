@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Azure Study Cloud - Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#aeecff",
+                        "on-tertiary-container": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "on-background": "#1a1c1c",
+                        "on-secondary-fixed": "#001e2d",
+                        "secondary": "#00658d",
+                        "on-primary-container": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-primary-fixed": "#001c39",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#008299",
+                        "tertiary": "#00677a",
+                        "secondary-container": "#2fbcfe",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-dim": "#dadada",
+                        "surface-container": "#eeeeee",
+                        "secondary-fixed-dim": "#82cfff",
+                        "surface-container-high": "#e8e8e8",
+                        "on-error-container": "#93000a",
+                        "surface": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004883",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c0c7d4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#a3c9ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary-fixed": "#d3e3ff",
+                        "inverse-primary": "#a3c9ff",
+                        "surface-tint": "#0060ab",
+                        "primary": "#005faa",
+                        "outline": "#717783",
+                        "on-surface-variant": "#404752",
+                        "tertiary-fixed-dim": "#54d6f6",
+                        "primary-container": "#0078d4",
+                        "on-secondary-container": "#004866"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3, h4 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-background min-h-screen">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-50 bg-slate-50/80 backdrop-blur-xl shadow-sm shadow-blue-900/5 font-['Manrope'] antialiased">
+<div class="flex justify-between items-center px-6 py-3 w-full max-w-[1440px] mx-auto">
+<div class="flex items-center gap-8">
+<span class="text-xl font-bold tracking-tight text-blue-700">Azure Study Cloud</span>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-blue-700 font-semibold border-b-2 border-blue-600 px-1 py-1 transition-colors" href="#">Dashboard</a>
+<a class="text-slate-600 hover:text-blue-500 px-1 py-1 transition-colors cursor-pointer" href="#">Wiki</a>
+<a class="text-slate-600 hover:text-blue-500 px-1 py-1 transition-colors cursor-pointer" href="#">Quiz</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="bg-slate-100 border-none rounded-full pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/30 w-64" placeholder="Search resources..." type="text"/>
+</div>
+<button class="p-2 text-slate-600 hover:bg-blue-50/50 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="p-2 text-slate-600 hover:bg-blue-50/50 transition-colors rounded-full active:scale-95 duration-200">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/10">
+<img alt="User profile photo" data-alt="professional headshot of a smiling young professional man with short dark hair and a friendly demeanor in soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCX2VwgrNUV6kj4eHX3UeceVRhlM5IqL5hyeaP9J5vwzBkARH0bNmwZ6dqrrMraJrL7Ty1tDHhEwTJJ1LPHcu7SFVVpVOpPA9nNw8U6caJ0sayhK0T9lKkIF5T_YcGxmFZEdz-pwhg5Q5k5bw41FG3V14-C_yprbcQVWmxu9Zd-OvKaTFBpUBD-bDJE81YDIwDlpAEL2P1ybY3PXfKXh58rTzliLpiez0yK3kyp3iGmUQ-ErmScO5gO5O729mgwWm6oaukzNJrEtf6M"/>
+</div>
+</div>
+</div>
+</header>
+<div class="flex max-w-[1440px] mx-auto">
+<!-- SideNavBar -->
+<aside class="h-[calc(100vh-64px)] w-64 sticky top-16 hidden lg:flex flex-col gap-2 p-4 bg-slate-50 font-['Inter'] text-sm tracking-wide border-r border-slate-200">
+<div class="mb-6 px-2">
+<div class="flex items-center gap-3 mb-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined" style="font-size: 18px;">architecture</span>
+</div>
+<span class="text-lg font-black text-slate-900">Learning Path</span>
+</div>
+<span class="text-xs font-medium text-slate-500 uppercase tracking-widest">AZ-900 Fundamentals</span>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-white text-blue-700 rounded-lg shadow-sm font-bold hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-500 hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="menu_book">menu_book</span>
+<span>Wiki</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 hover:text-blue-500 hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" data-icon="quiz">quiz</span>
+<span>Quiz</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-4">
+<div class="bg-primary-container p-4 rounded-xl text-white">
+<p class="font-bold mb-1">Upgrade to Pro</p>
+<p class="text-xs opacity-90 mb-3">Get access to premium practice exams and labs.</p>
+<button class="w-full py-2 bg-white text-primary font-bold rounded-lg text-xs active:scale-95 transition-transform">Unlock All Features</button>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-blue-500" href="#">
+<span class="material-symbols-outlined" data-icon="help">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-2 text-slate-500 hover:text-error" href="#">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 p-8 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="mb-12">
+<h1 class="text-5xl font-extrabold tracking-tight mb-2 text-on-background">Welcome back, Alex.</h1>
+<p class="text-on-surface-variant text-lg">You're on a 5-day study streak. Keep the momentum going!</p>
+</section>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+<!-- AZ-900 Progress Card -->
+<div class="md:col-span-8 bg-surface-container-lowest rounded-xl p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-8">
+<div>
+<span class="px-3 py-1 bg-primary/10 text-primary text-xs font-bold rounded-full mb-4 inline-block">Certification Track</span>
+<h2 class="text-3xl font-bold text-on-background">AZ-900: Fundamentals</h2>
+</div>
+<div class="w-16 h-16 rounded-2xl bg-surface-container-low flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined" style="font-size: 32px;">cloud_done</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between text-sm font-semibold">
+<span class="text-on-surface-variant uppercase tracking-wider">Course Progress</span>
+<span class="text-primary">82%</span>
+</div>
+<div class="h-4 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-container rounded-full" style="width: 82%"></div>
+</div>
+<div class="flex gap-4 pt-4">
+<div class="flex-1 bg-surface-container-low p-4 rounded-xl">
+<span class="block text-2xl font-bold text-on-background">12/15</span>
+<span class="text-xs text-on-surface-variant uppercase font-medium">Modules Done</span>
+</div>
+<div class="flex-1 bg-surface-container-low p-4 rounded-xl">
+<span class="block text-2xl font-bold text-on-background">480m</span>
+<span class="text-xs text-on-surface-variant uppercase font-medium">Total Study Time</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Daily Goals Card -->
+<div class="md:col-span-4 bg-surface-container-low rounded-xl p-8 flex flex-col">
+<h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary">flag</span>
+                        Daily Goals
+                    </h3>
+<div class="space-y-4 flex-1">
+<label class="flex items-center gap-4 p-4 bg-surface-container-lowest rounded-xl cursor-pointer group">
+<input checked="" class="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1">
+<span class="block font-semibold text-on-background line-through opacity-50">Review Storage Services</span>
+<span class="text-xs text-on-surface-variant">20 mins</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 bg-surface-container-lowest rounded-xl cursor-pointer group">
+<input class="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1">
+<span class="block font-semibold text-on-background">Take Practice Quiz</span>
+<span class="text-xs text-on-surface-variant">15 questions</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 bg-surface-container-lowest rounded-xl cursor-pointer group">
+<input class="w-5 h-5 rounded-md border-outline-variant text-primary focus:ring-primary" type="checkbox"/>
+<div class="flex-1">
+<span class="block font-semibold text-on-background">Read Wiki: Azure Policy</span>
+<span class="text-xs text-on-surface-variant">10 mins</span>
+</div>
+</label>
+</div>
+<button class="mt-6 w-full py-3 text-primary font-bold text-sm hover:bg-primary/5 rounded-lg transition-colors">Edit Goals</button>
+</div>
+<!-- AZ-104 Progress Card (Secondary) -->
+<div class="md:col-span-4 bg-surface-container-lowest rounded-xl p-8 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h3 class="font-bold text-on-background">AZ-104: Administrator</h3>
+<span class="text-xs font-bold text-secondary bg-secondary-fixed/30 px-2 py-1 rounded">Next Up</span>
+</div>
+<div class="flex items-center gap-4 mb-6">
+<div class="flex-1 h-2 bg-surface-container-highest rounded-full">
+<div class="h-full bg-tertiary-container rounded-full" style="width: 15%"></div>
+</div>
+<span class="text-sm font-bold text-on-surface-variant">15%</span>
+</div>
+<button class="w-full py-2 bg-surface-container-low text-on-surface font-semibold rounded-lg text-sm hover:bg-surface-container-high transition-colors">Switch Track</button>
+</div>
+<!-- Start Practice Quiz CTA -->
+<div class="md:col-span-8 bg-gradient-to-br from-primary to-primary-container rounded-xl p-8 text-white flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden">
+<div class="relative z-10 max-w-md">
+<h2 class="text-3xl font-bold mb-2">Ready for a challenge?</h2>
+<p class="opacity-90 mb-6">Test your knowledge with an AI-generated quiz based on your recent activity.</p>
+<button class="px-8 py-4 bg-white text-primary font-bold rounded-lg shadow-lg hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined">play_arrow</span>
+                            Start Practice Quiz
+                        </button>
+</div>
+<div class="relative z-10 w-full md:w-48 h-48 bg-white/10 backdrop-blur-md rounded-2xl p-4 flex flex-col justify-center items-center text-center">
+<span class="text-5xl font-black mb-1">88</span>
+<span class="text-xs uppercase font-bold tracking-widest opacity-80">Last Quiz Score</span>
+<div class="mt-4 flex gap-1">
+<div class="w-2 h-8 bg-white/20 rounded-full"></div>
+<div class="w-2 h-10 bg-white/40 rounded-full"></div>
+<div class="w-2 h-14 bg-white rounded-full"></div>
+<div class="w-2 h-10 bg-white/40 rounded-full"></div>
+</div>
+</div>
+<!-- Decorative background element -->
+<div class="absolute -right-16 -bottom-16 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
+</div>
+<!-- Recently Viewed Wiki Section -->
+<div class="md:col-span-12 mt-4">
+<div class="flex items-center justify-between mb-6 px-2">
+<h3 class="text-2xl font-bold text-on-background">Recently Viewed Wiki Articles</h3>
+<a class="text-primary font-bold text-sm flex items-center gap-1 group" href="#">
+                            View All Wiki
+                            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Article 1 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 hover:translate-y-[-4px] transition-all duration-300 shadow-sm border border-transparent hover:border-primary/10 group">
+<div class="w-12 h-12 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">account_tree</span>
+</div>
+<h4 class="font-bold text-lg mb-2 text-on-background">Resource Groups</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-4">Learn how to organize your Azure resources for billing and administration.</p>
+<span class="text-xs font-bold text-tertiary uppercase tracking-wider">Core Architecture</span>
+</div>
+<!-- Article 2 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 hover:translate-y-[-4px] transition-all duration-300 shadow-sm border border-transparent hover:border-primary/10 group">
+<div class="w-12 h-12 bg-primary-fixed text-on-primary-fixed-variant rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">security</span>
+</div>
+<h4 class="font-bold text-lg mb-2 text-on-background">Azure RBAC</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-4">Understanding Role-Based Access Control and authorization models.</p>
+<span class="text-xs font-bold text-primary uppercase tracking-wider">Security &amp; Compliance</span>
+</div>
+<!-- Article 3 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 hover:translate-y-[-4px] transition-all duration-300 shadow-sm border border-transparent hover:border-primary/10 group">
+<div class="w-12 h-12 bg-secondary-fixed text-on-secondary-fixed-variant rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<h4 class="font-bold text-lg mb-2 text-on-background">Cost Management</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-4">Best practices for monitoring and controlling your cloud spend.</p>
+<span class="text-xs font-bold text-secondary uppercase tracking-wider">Governance</span>
+</div>
+<!-- Article 4 -->
+<div class="bg-surface-container-lowest rounded-xl p-6 hover:translate-y-[-4px] transition-all duration-300 shadow-sm border border-transparent hover:border-primary/10 group">
+<div class="w-12 h-12 bg-surface-container-high text-on-surface-variant rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined">dns</span>
+</div>
+<h4 class="font-bold text-lg mb-2 text-on-background">Virtual Networks</h4>
+<p class="text-sm text-on-surface-variant line-clamp-2 mb-4">The building blocks for private networks in the Azure cloud.</p>
+<span class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">Networking</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- Mobile Bottom Navigation (Visible on mobile only) -->
+<nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-50 border-t border-slate-200 flex justify-around items-center py-3 z-50">
+<button class="flex flex-col items-center gap-1 text-blue-700">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-[10px] font-bold">Dashboard</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">menu_book</span>
+<span class="text-[10px] font-medium">Wiki</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">quiz</span>
+<span class="text-[10px] font-medium">Quiz</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-slate-500">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</button>
+</nav>
+</body></html>

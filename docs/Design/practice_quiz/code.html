@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Practice Quiz - Azure Study Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary-fixed": "#aeecff",
+                    "on-tertiary-container": "#ffffff",
+                    "on-tertiary-fixed-variant": "#004e5d",
+                    "on-background": "#1a1c1c",
+                    "on-secondary-fixed": "#001e2d",
+                    "secondary": "#00658d",
+                    "on-primary-container": "#ffffff",
+                    "on-surface": "#1a1c1c",
+                    "on-primary-fixed": "#001c39",
+                    "inverse-surface": "#2f3131",
+                    "on-tertiary": "#ffffff",
+                    "inverse-on-surface": "#f1f1f1",
+                    "background": "#f9f9f9",
+                    "surface-variant": "#e2e2e2",
+                    "surface-container-highest": "#e2e2e2",
+                    "on-primary": "#ffffff",
+                    "tertiary-container": "#008299",
+                    "tertiary": "#00677a",
+                    "secondary-container": "#2fbcfe",
+                    "surface-container-low": "#f3f3f3",
+                    "on-tertiary-fixed": "#001f26",
+                    "surface-dim": "#dadada",
+                    "surface-container": "#eeeeee",
+                    "secondary-fixed-dim": "#82cfff",
+                    "surface-container-high": "#e8e8e8",
+                    "on-error-container": "#93000a",
+                    "surface": "#f9f9f9",
+                    "on-error": "#ffffff",
+                    "error-container": "#ffdad6",
+                    "on-primary-fixed-variant": "#004883",
+                    "on-secondary": "#ffffff",
+                    "outline-variant": "#c0c7d4",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f9f9f9",
+                    "on-secondary-fixed-variant": "#004c6b",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#a3c9ff",
+                    "secondary-fixed": "#c6e7ff",
+                    "primary-fixed": "#d3e3ff",
+                    "inverse-primary": "#a3c9ff",
+                    "surface-tint": "#0060ab",
+                    "primary": "#005faa",
+                    "outline": "#717783",
+                    "on-surface-variant": "#404752",
+                    "tertiary-fixed-dim": "#54d6f6",
+                    "primary-container": "#0078d4",
+                    "on-secondary-container": "#004866"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Manrope"],
+                    "body": ["Inter"],
+                    "label": ["Inter"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        h1, h2, h3 { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen">
+<!-- TopNavBar -->
+<nav class="w-full sticky top-0 z-50 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl shadow-sm shadow-blue-900/5 font-['Manrope'] antialiased">
+<div class="flex justify-between items-center px-6 py-3 w-full">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-blue-700 dark:text-blue-400 text-2xl" data-icon="cloud">cloud</span>
+<span class="text-xl font-bold tracking-tight text-blue-700 dark:text-blue-400">Azure Study Cloud</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors cursor-pointer active:scale-95 duration-200">Dashboard</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors cursor-pointer active:scale-95 duration-200">Wiki</a>
+<a class="text-blue-700 dark:text-blue-300 font-semibold border-b-2 border-blue-600 cursor-pointer active:scale-95 duration-200">Quiz</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-2 px-3 py-1.5 bg-surface-container-high rounded-full">
+<span class="material-symbols-outlined text-secondary" data-icon="timer">timer</span>
+<span class="font-mono font-medium">14:52</span>
+</div>
+<button class="p-2 hover:bg-blue-50/50 dark:hover:bg-blue-900/20 transition-colors rounded-full">
+<span class="material-symbols-outlined text-slate-600" data-icon="notifications">notifications</span>
+</button>
+<img alt="User profile photo" class="w-8 h-8 rounded-full border border-outline-variant/20" data-alt="close-up portrait of a professional woman with a friendly expression in a modern office setting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBD8DttgCV4ZGS9WEQsBY3pWDvFvJ9muSiDaKJpVz2q2bvAPNhnsED9KFO-mpcFZckohLmhRvHV8VT8RKUqEhVHEJDR3dhEXVn1g59FTUR4V3QED7gOCFlhCjf7u9xvqZganqVPP2MIeJbHC8SxyHax-Xc19rakD1Wsn9zbHL4IHRXBKNl3-ry-kr8ApnvVKRq3L7LbtX3YHvrLp0WRQOlVV2-7z_QHdKsaZOkamCuYAPOmRJzwSD6-hx_R7PjhukB7exxeEKko37D"/>
+</div>
+</div>
+</nav>
+<main class="max-w-5xl mx-auto px-6 py-12">
+<!-- Progress Header -->
+<header class="mb-12">
+<div class="flex justify-between items-end mb-4">
+<div>
+<p class="text-secondary font-semibold tracking-wider text-xs uppercase mb-2">AZ-900 Fundamentals</p>
+<h1 class="text-4xl font-extrabold tracking-tight">Question 4 of 20</h1>
+</div>
+<div class="text-right">
+<span class="text-on-surface-variant text-sm font-medium">Completion: 20%</span>
+</div>
+</div>
+<!-- Progress Indicator -->
+<div class="h-3 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-container rounded-full" style="width: 20%"></div>
+</div>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Question Content -->
+<div class="lg:col-span-8 space-y-8">
+<div class="bg-surface-container-lowest p-8 rounded-xl shadow-sm border-0">
+<h2 class="text-2xl font-bold text-on-surface leading-snug mb-6">
+                        You have multiple Azure subscriptions. You plan to create a new Resource Group that will contain resources for a production environment. 
+                        Which statement regarding Resource Groups is correct?
+                    </h2>
+<!-- Options Grid -->
+<div class="space-y-4">
+<label class="group relative flex items-center p-5 rounded-xl bg-surface-container-low hover:bg-primary-fixed transition-all cursor-pointer">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary/30 transition-all" name="quiz_option" type="radio"/>
+<span class="ml-4 text-on-surface font-medium">A Resource Group can be nested inside another Resource Group.</span>
+</label>
+<label class="group relative flex items-center p-5 rounded-xl bg-primary text-on-primary shadow-lg cursor-pointer ring-4 ring-primary/10">
+<input checked="" class="w-5 h-5 text-white border-white/40 focus:ring-offset-0 focus:ring-transparent transition-all" name="quiz_option" type="radio"/>
+<span class="ml-4 font-semibold">A resource can only be a member of a single Resource Group at a time.</span>
+<span class="ml-auto material-symbols-outlined" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</label>
+<label class="group relative flex items-center p-5 rounded-xl bg-surface-container-low hover:bg-primary-fixed transition-all cursor-pointer">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary/30 transition-all" name="quiz_option" type="radio"/>
+<span class="ml-4 text-on-surface font-medium">Resource Groups must be located in the same region as the resources they contain.</span>
+</label>
+<label class="group relative flex items-center p-5 rounded-xl bg-surface-container-low hover:bg-primary-fixed transition-all cursor-pointer">
+<input class="w-5 h-5 text-primary border-outline-variant focus:ring-primary/30 transition-all" name="quiz_option" type="radio"/>
+<span class="ml-4 text-on-surface font-medium">Deleting a Resource Group will preserve the virtual machines inside of it.</span>
+</label>
+</div>
+</div>
+<!-- Navigation Controls -->
+<div class="flex justify-between items-center pt-4">
+<button class="flex items-center gap-2 px-6 py-3 font-semibold text-primary hover:bg-primary-fixed transition-colors rounded-xl group">
+<span class="material-symbols-outlined group-hover:-translate-x-1 transition-transform" data-icon="arrow_back">arrow_back</span>
+                        Back
+                    </button>
+<div class="flex gap-4">
+<button class="px-6 py-3 font-semibold text-on-surface-variant hover:bg-surface-container-high transition-colors rounded-xl">
+                            Mark for Review
+                        </button>
+<button class="flex items-center gap-2 px-8 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-md hover:shadow-lg active:scale-95 transition-all group">
+                            Next Question
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sidebar Info (Bento Style) -->
+<aside class="lg:col-span-4 space-y-6">
+<!-- Exam Meta Card -->
+<div class="bg-surface-container-low p-6 rounded-xl space-y-4">
+<h3 class="text-sm font-bold uppercase tracking-widest text-on-surface-variant">Question Context</h3>
+<div class="flex items-start gap-4">
+<div class="p-3 bg-tertiary-fixed text-on-tertiary-fixed-variant rounded-xl">
+<span class="material-symbols-outlined" data-icon="hub">hub</span>
+</div>
+<div>
+<p class="font-bold text-on-surface">Azure Governance</p>
+<p class="text-sm text-on-surface-variant">Resource Management Hierarchy</p>
+</div>
+</div>
+</div>
+<!-- Image Reference -->
+<div class="relative group overflow-hidden rounded-xl bg-surface-container-low">
+<img alt="Azure Resource Management Hierarchy Diagram" class="w-full h-48 object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="abstract architectural diagram showing nested boxes representing Azure management groups, subscriptions, and resource groups in a clean technical style" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATtLuGZ8S24T1gFgjV73xhw9lAbueOSJVuWh3obMGxrmRClxgjU0pBO7hhWKMSemBrW83W682EPLKuf_S1K-3qB5P45x76bdHF-lSoNf-PXwmPiHzIG74ZsPk5hQM1xKnPwqOiUaWRuALGh9NgMlmZNjWNJywHAB_78ow1U4PaWVVJThdg_9KDHk3GAd1OPFQWxCp9GWIdfKmRS_0UpV-B1K3vzNkxhFC65Wvu0d_aPaz43fxf3-jnEhEe9kaN8TfIa9r6PuYB65zu"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low/90 to-transparent p-6 flex flex-col justify-end">
+<p class="text-xs font-bold text-primary uppercase">Study Tip</p>
+<p class="text-sm font-medium">Resources can be moved between groups, but hierarchy remains flat.</p>
+</div>
+</div>
+<!-- Quick Help -->
+<div class="bg-tertiary-container/10 p-6 rounded-xl border-l-4 border-tertiary">
+<div class="flex items-center gap-2 text-tertiary mb-2">
+<span class="material-symbols-outlined" data-icon="lightbulb" style="font-variation-settings: 'FILL' 1;">lightbulb</span>
+<span class="font-bold">Pro Hint</span>
+</div>
+<p class="text-sm leading-relaxed text-on-surface-variant">
+                        Think of a Resource Group as a logical container. While the group itself has a location (to store metadata), the resources inside can live anywhere.
+                    </p>
+</div>
+</aside>
+</div>
+</main>
+<!-- Floating Action for Help (Only where relevant) -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-secondary text-on-secondary rounded-full shadow-2xl flex items-center justify-center hover:scale-110 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl" data-icon="help">help</span>
+</button>
+</body></html>

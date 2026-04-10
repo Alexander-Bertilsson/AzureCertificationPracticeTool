@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Quiz Results | Azure Study Cloud</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed": "#aeecff",
+                        "on-tertiary-container": "#ffffff",
+                        "on-tertiary-fixed-variant": "#004e5d",
+                        "on-background": "#1a1c1c",
+                        "on-secondary-fixed": "#001e2d",
+                        "secondary": "#00658d",
+                        "on-primary-container": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "on-primary-fixed": "#001c39",
+                        "inverse-surface": "#2f3131",
+                        "on-tertiary": "#ffffff",
+                        "inverse-on-surface": "#f1f1f1",
+                        "background": "#f9f9f9",
+                        "surface-variant": "#e2e2e2",
+                        "surface-container-highest": "#e2e2e2",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#008299",
+                        "tertiary": "#00677a",
+                        "secondary-container": "#2fbcfe",
+                        "surface-container-low": "#f3f3f3",
+                        "on-tertiary-fixed": "#001f26",
+                        "surface-dim": "#dadada",
+                        "surface-container": "#eeeeee",
+                        "secondary-fixed-dim": "#82cfff",
+                        "surface-container-high": "#e8e8e8",
+                        "on-error-container": "#93000a",
+                        "surface": "#f9f9f9",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-fixed-variant": "#004883",
+                        "on-secondary": "#ffffff",
+                        "outline-variant": "#c0c7d4",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f9f9f9",
+                        "on-secondary-fixed-variant": "#004c6b",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#a3c9ff",
+                        "secondary-fixed": "#c6e7ff",
+                        "primary-fixed": "#d3e3ff",
+                        "inverse-primary": "#a3c9ff",
+                        "surface-tint": "#0060ab",
+                        "primary": "#005faa",
+                        "outline": "#717783",
+                        "on-surface-variant": "#404752",
+                        "tertiary-fixed-dim": "#54d6f6",
+                        "primary-container": "#0078d4",
+                        "on-secondary-container": "#004866"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Manrope"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(249, 249, 249, 0.8);
+            backdrop-filter: blur(12px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-background antialiased overflow-x-hidden">
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-slate-50 dark:bg-slate-950 flex flex-col gap-2 p-4 border-r border-slate-200 dark:border-slate-800 z-50">
+<div class="flex items-center gap-3 px-2 py-4 mb-4">
+<div class="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-lg">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">cloud</span>
+</div>
+<div>
+<h1 class="text-lg font-black text-slate-900 dark:text-white leading-tight">Learning Path</h1>
+<p class="text-[10px] text-slate-500 font-semibold tracking-widest uppercase">AZ-900 Fundamentals</p>
+</div>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-blue-500 hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-blue-500 hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined">menu_book</span>
+<span>Wiki</span>
+</a>
+<!-- Active State: Quiz -->
+<a class="flex items-center gap-3 px-4 py-3 bg-white dark:bg-slate-800 text-blue-700 dark:text-blue-300 rounded-lg shadow-sm font-bold hover:translate-x-1 transition-all duration-300" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">quiz</span>
+<span>Quiz</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-slate-200 dark:border-slate-800 flex flex-col gap-1">
+<div class="p-4 mb-4 rounded-xl bg-primary-fixed text-on-primary-fixed-variant">
+<p class="text-xs font-bold mb-2">Ready for the real deal?</p>
+<button class="w-full py-2 bg-primary text-on-primary text-xs font-bold rounded-lg hover:opacity-90 transition-opacity">Upgrade to Pro</button>
+</div>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-blue-500 transition-all" href="#">
+<span class="material-symbols-outlined">help</span>
+<span>Help Center</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-500 dark:text-slate-400 hover:text-blue-500 transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span>Logout</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen">
+<!-- TopNavBar -->
+<header class="w-full sticky top-0 z-40 bg-slate-50/80 dark:bg-slate-900/80 backdrop-blur-xl flex justify-between items-center px-8 py-4 shadow-sm shadow-blue-900/5 font-['Manrope']">
+<div class="flex items-center gap-4">
+<h2 class="text-xl font-bold tracking-tight text-blue-700 dark:text-blue-400">Azure Study Cloud</h2>
+<div class="h-6 w-[1px] bg-slate-200 mx-2"></div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors" href="#">Pathways</a>
+<a class="text-blue-700 dark:text-blue-300 font-semibold border-b-2 border-blue-600" href="#">Quiz Analytics</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-blue-500 transition-colors" href="#">Resources</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group">
+<span class="material-symbols-outlined p-2 text-slate-500 hover:bg-blue-50/50 rounded-full cursor-pointer transition-colors">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-white"></span>
+</div>
+<span class="material-symbols-outlined p-2 text-slate-500 hover:bg-blue-50/50 rounded-full cursor-pointer transition-colors">settings</span>
+<img alt="User profile photo" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover cursor-pointer active:scale-95 duration-200" data-alt="Professional headshot of a smiling man in a business casual shirt with soft studio lighting and neutral background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZo_YRFh6yqbd-_7yZfii5DQFQVJkJSBOBiX5aKZkcH-R33ljWZnvMWEQJbcSRYGrlRNspPuh21hJkG8aRD6P43MFMDtG3-6DEwg-jqXec-fuvgc5DTVP2x-oAlRNcvWgCVvhuTUeMvztUO2Dd-9gLbvqBcHPDoUqSrr_VzLFAgJhXQimZvhvt4X3VCFgvc3hp1qi4zNSootyocEgwoqGDXLi8ZqmAQ0TrDG0rdolPcB3xdUQ9WyGXN_yPXLmJcZ8hk-sL62u8jNI4"/>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-8 lg:p-12 max-w-7xl mx-auto">
+<!-- Hero Results Section: Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+<!-- Score Card -->
+<div class="md:col-span-2 bg-surface-container-lowest p-8 rounded-[2rem] shadow-sm relative overflow-hidden flex flex-col justify-between min-h-[320px]">
+<div class="relative z-10">
+<span class="inline-flex items-center px-4 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant text-xs font-bold tracking-wider uppercase mb-4">Final Results</span>
+<h1 class="font-headline text-5xl lg:text-6xl font-extrabold tracking-tight text-on-background mb-2">Great Progress, Alex!</h1>
+<p class="text-on-surface-variant max-w-md text-lg">You've successfully mastered the core concepts of Azure Cloud Shell and Virtual Networking. Just a few areas left to polish.</p>
+</div>
+<div class="flex items-end justify-between relative z-10 mt-8">
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Review Wiki</button>
+<button class="px-6 py-3 bg-secondary-container text-on-secondary-container font-bold rounded-xl hover:bg-secondary-fixed transition-all">Retake Quiz</button>
+</div>
+</div>
+<!-- Large Abstract Background Shape -->
+<div class="absolute -top-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-12 right-12 w-48 h-48 bg-tertiary/10 rounded-full blur-2xl"></div>
+</div>
+<!-- Circular Stats Card -->
+<div class="bg-primary text-on-primary p-8 rounded-[2rem] shadow-xl shadow-primary/10 flex flex-col items-center justify-center text-center relative overflow-hidden">
+<div class="relative w-40 h-40 flex items-center justify-center mb-6">
+<!-- SVG Progress Ring -->
+<svg class="w-full h-full transform -rotate-90">
+<circle class="opacity-20" cx="80" cy="80" fill="transparent" r="70" stroke="currentColor" stroke-width="8"></circle>
+<circle cx="80" cy="80" fill="transparent" r="70" stroke="white" stroke-dasharray="440" stroke-dashoffset="66" stroke-linecap="round" stroke-width="12"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="font-headline text-5xl font-black">85%</span>
+<span class="text-[10px] font-bold tracking-widest uppercase opacity-80">Overall Score</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-2xl font-bold">Pass Status</span>
+<div class="flex items-center gap-2 bg-white/20 px-4 py-1.5 rounded-full backdrop-blur-sm">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm font-bold tracking-wide">CERTIFIED READY</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Detailed Analysis Section -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
+<!-- Topic Breakdown (Sidebar within content) -->
+<div class="lg:col-span-1 space-y-8">
+<h3 class="font-headline text-xl font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">analytics</span>
+                        Topic Mastery
+                    </h3>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between text-sm font-bold mb-2">
+<span>Cloud Concepts</span>
+<span class="text-tertiary">100%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-container w-[100%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm font-bold mb-2">
+<span>Core Services</span>
+<span class="text-secondary">75%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-secondary to-secondary-container w-[75%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-sm font-bold mb-2">
+<span>Security &amp; Compliance</span>
+<span class="text-error">60%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-gradient-to-r from-error to-error/60 w-[60%]"></div>
+</div>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low rounded-2xl">
+<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider mb-4">Top recommendation</p>
+<h4 class="font-bold text-lg leading-tight mb-2">Review Governance &amp; Privacy</h4>
+<p class="text-sm text-on-surface-variant mb-4">Most missed questions were in the 'Compliance' category. Focus on Azure Policy and Blueprints.</p>
+<a class="text-primary text-sm font-bold flex items-center gap-1 group" href="#">
+                            Open Wiki Module
+                            <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+<!-- Questions List -->
+<div class="lg:col-span-3">
+<div class="flex justify-between items-center mb-8">
+<h3 class="font-headline text-2xl font-bold">Question Analysis</h3>
+<div class="flex gap-2">
+<span class="px-4 py-1.5 rounded-full bg-surface-container-high text-xs font-bold text-on-surface-variant cursor-pointer hover:bg-surface-container-highest">All (20)</span>
+<span class="px-4 py-1.5 rounded-full bg-error-container text-xs font-bold text-on-error-container cursor-pointer">Incorrect (3)</span>
+</div>
+</div>
+<div class="space-y-6">
+<!-- Correct Question -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border-l-4 border-tertiary">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">Question 01 • Cloud Concepts</span>
+<span class="material-symbols-outlined text-tertiary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<h4 class="font-bold text-lg mb-4 leading-relaxed">Which Azure service is used to host a distributed database that supports multiple write regions?</h4>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div class="px-4 py-3 bg-tertiary/10 text-on-tertiary-fixed-variant border border-tertiary/20 rounded-xl flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">radio_button_checked</span>
+<span class="text-sm font-semibold">Azure Cosmos DB</span>
+</div>
+<div class="px-4 py-3 bg-surface-container-low text-on-surface-variant rounded-xl flex items-center gap-3 opacity-60">
+<span class="material-symbols-outlined text-sm">radio_button_unchecked</span>
+<span class="text-sm">Azure SQL Database</span>
+</div>
+</div>
+</div>
+<!-- Incorrect Question -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border-l-4 border-error">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">Question 02 • Security</span>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+<h4 class="font-bold text-lg mb-4 leading-relaxed">What is the primary purpose of Azure Resource Locks?</h4>
+<div class="space-y-3 mb-6">
+<div class="px-4 py-3 bg-error-container/50 text-on-error-container border border-error/20 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">close</span>
+<span class="text-sm font-semibold">To encrypt sensitive data at rest</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Your Answer</span>
+</div>
+<div class="px-4 py-3 bg-tertiary/5 text-on-tertiary-fixed-variant border border-dashed border-tertiary/30 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">check</span>
+<span class="text-sm font-bold">To prevent accidental deletion or modification</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Correct Answer</span>
+</div>
+</div>
+<!-- Explanation Block -->
+<div class="p-5 bg-surface-container-low rounded-xl">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-3">
+                                            Resource locks help you prevent accidental deletion or modification of your Azure resources. They are not used for encryption (which is handled by Azure Key Vault or built-in service encryption).
+                                        </p>
+<a class="inline-flex items-center gap-2 text-primary text-xs font-bold hover:underline" href="#">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                            Read Wiki: Azure Resource Manager (ARM) Locks
+                                        </a>
+</div>
+</div>
+</div>
+</div>
+<!-- Another Incorrect Question -->
+<div class="bg-surface-container-lowest p-6 rounded-2xl shadow-sm border-l-4 border-error">
+<div class="flex justify-between items-start mb-4">
+<span class="text-[10px] font-bold tracking-widest text-on-surface-variant uppercase">Question 03 • Governance</span>
+<span class="material-symbols-outlined text-error" style="font-variation-settings: 'FILL' 1;">cancel</span>
+</div>
+<h4 class="font-bold text-lg mb-4 leading-relaxed">Which tool provides a set of tools for managing your cloud spend?</h4>
+<div class="space-y-3 mb-6">
+<div class="px-4 py-3 bg-error-container/50 text-on-error-container border border-error/20 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">close</span>
+<span class="text-sm font-semibold">Azure Advisor</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Your Answer</span>
+</div>
+<div class="px-4 py-3 bg-tertiary/5 text-on-tertiary-fixed-variant border border-dashed border-tertiary/30 rounded-xl flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-sm">check</span>
+<span class="text-sm font-bold">Microsoft Cost Management</span>
+</div>
+<span class="text-[10px] font-bold uppercase tracking-tighter opacity-70">Correct Answer</span>
+</div>
+</div>
+<div class="p-5 bg-surface-container-low rounded-xl">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<div>
+<p class="text-sm text-on-surface-variant leading-relaxed mb-3">
+                                            While Azure Advisor provides cost recommendations, Microsoft Cost Management is the specialized tool for reporting and managing your cloud spend over time.
+                                        </p>
+<a class="inline-flex items-center gap-2 text-primary text-xs font-bold hover:underline" href="#">
+<span class="material-symbols-outlined text-sm">menu_book</span>
+                                            Read Wiki: Cost Management and Billing
+                                        </a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer CTA within content -->
+<div class="mt-12 p-8 bg-gradient-to-br from-primary to-primary-container rounded-[2rem] text-on-primary flex flex-col md:flex-row items-center justify-between gap-6 overflow-hidden relative">
+<div class="relative z-10">
+<h3 class="font-headline text-2xl font-bold mb-2">Feeling Confident?</h3>
+<p class="opacity-90 max-w-sm">Schedule your official AZ-900 exam and get 15% off using our partner code.</p>
+</div>
+<button class="relative z-10 px-8 py-4 bg-white text-primary font-black rounded-2xl shadow-xl hover:scale-105 active:scale-95 transition-all">Schedule Exam</button>
+<!-- Decorative element -->
+<div class="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full -mr-20 -mt-20 blur-2xl"></div>
+</div>
+</div>
+</div>
+</div>
+<footer class="mt-20 px-8 py-12 bg-surface-container-low text-center border-t border-slate-200">
+<p class="text-on-surface-variant text-sm font-medium">Azure Study Cloud • Your Path to Certification</p>
+<div class="flex justify-center gap-6 mt-4">
+<a class="text-xs font-bold text-slate-400 hover:text-primary uppercase tracking-widest" href="#">Privacy</a>
+<a class="text-xs font-bold text-slate-400 hover:text-primary uppercase tracking-widest" href="#">Terms</a>
+<a class="text-xs font-bold text-slate-400 hover:text-primary uppercase tracking-widest" href="#">Support</a>
+</div>
+</footer>
+</main>
+</body></html>
