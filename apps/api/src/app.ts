@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { errorHandler } from './common/middleware/error-handler.js';
 import { env } from './config/env.js';
 import { registerCertificationRoutes } from './modules/certifications/certification.routes.js';
+import { registerTopicRoutes } from './modules/topics/topic.routes.js';
 
 /**
  * Build a fully-configured Fastify instance. Pure factory — no listening, no
@@ -79,6 +80,7 @@ export async function buildApp(): Promise<FastifyInstance> {
   await app.register(
     (v1, _opts, done) => {
       registerCertificationRoutes(v1);
+      registerTopicRoutes(v1);
       done();
     },
     { prefix: '/api/v1' },

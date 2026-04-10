@@ -1,2 +1,3 @@
 export * from './common.js';
 export * from './certification.js';
+export * from './topic.js';
