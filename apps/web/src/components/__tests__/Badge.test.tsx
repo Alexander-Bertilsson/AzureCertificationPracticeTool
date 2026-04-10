@@ -18,6 +18,7 @@ describe('Badge', () => {
     const containerStyle = flattenStyle(getByTestId('badge').props.style);
     const textStyle = flattenStyle(getByText('Failed').props.style);
     expect(containerStyle['borderRadius']).toBe(tokens.radius.pill);
-    expect(textStyle['color']).toBe(tokens.colors.danger);
+    expect(containerStyle['backgroundColor']).toBe(tokens.colors.errorContainer);
+    expect(textStyle['color']).toBe(tokens.colors.onErrorContainer);
   });
 });

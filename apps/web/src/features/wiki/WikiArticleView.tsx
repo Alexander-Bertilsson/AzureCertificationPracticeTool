@@ -1,5 +1,5 @@
 import type { WikiArticle } from '@acpt/shared';
-import { Linking, ScrollView } from 'react-native';
+import { Linking, ScrollView, View } from 'react-native';
 
 import { Badge } from '../../components/Badge';
 import { BodyText } from '../../components/BodyText';
@@ -32,48 +32,76 @@ export function WikiArticleView({ state }: WikiArticleViewProps): React.JSX.Elem
   return (
     <ScrollView
       contentContainerStyle={{
-        padding: theme.spacing.xl,
         backgroundColor: theme.colors.background,
         flexGrow: 1,
+        paddingHorizontal: theme.spacing.xxl,
+        paddingVertical: theme.spacing.xxxl,
       }}
       testID="wiki-article-screen"
     >
-      {state.status === 'loading' ? <Spinner label="Loading article" /> : null}
+      <View style={{ maxWidth: 860, width: '100%', alignSelf: 'center' }}>
+        {state.status === 'loading' ? <Spinner label="Loading article" /> : null}
 
-      {state.status === 'error' ? (
-        <Card>
-          <Stack gap="xs">
-            <Heading level={3}>Couldn&apos;t load this article</Heading>
-            <BodyText variant="muted">{state.message}</BodyText>
-          </Stack>
-        </Card>
-      ) : null}
-
-      {state.status === 'success' ? (
-        <Stack gap="lg">
-          <Stack gap="sm">
-            <Heading level={1}>{state.article.title}</Heading>
-            <Row gap="sm" align="center" wrap>
-              <Badge
-                label={`${String(state.article.readingTimeMinutes)} min read`}
-                tone="neutral"
-              />
-              {state.article.tags.map((tag) => (
-                <Badge key={tag} label={tag} tone="info" />
-              ))}
-            </Row>
-            <BodyText variant="muted">{state.article.summary}</BodyText>
-          </Stack>
-
-          <ThemedMarkdown onLinkPress={handleLinkPress}>{state.article.body}</ThemedMarkdown>
-
-          <Card padding="md">
-            <BodyText variant="small">
-              Source: <BodyText variant="small">{state.article.sourceUrl}</BodyText>
-            </BodyText>
+        {state.status === 'error' ? (
+          <Card elevated>
+            <Stack gap="xs">
+              <Heading level={3}>Couldn&apos;t load this article</Heading>
+              <BodyText variant="muted">{state.message}</BodyText>
+            </Stack>
           </Card>
-        </Stack>
-      ) : null}
+        ) : null}
+
+        {state.status === 'success' ? (
+          <Stack gap="xl">
+            <Stack gap="md">
+              <Badge label="Wiki Article" tone="info" />
+              <Heading level={1}>{state.article.title}</Heading>
+              <Row gap="sm" align="center" wrap>
+                <Badge
+                  label={`${String(state.article.readingTimeMinutes)} min read`}
+                  tone="success"
+                />
+                {state.article.tags.map((tag) => (
+                  <Badge key={tag} label={tag} tone="info" />
+                ))}
+              </Row>
+            </Stack>
+
+            <View
+              style={{
+                backgroundColor: theme.colors.surfaceMuted,
+                borderLeftWidth: 4,
+                borderLeftColor: theme.colors.primary,
+                borderRadius: theme.radius.lg,
+                padding: theme.spacing.xl,
+              }}
+            >
+              <BodyText style={{ fontSize: theme.fontSize.lg }}>{state.article.summary}</BodyText>
+            </View>
+
+            <ThemedMarkdown onLinkPress={handleLinkPress}>{state.article.body}</ThemedMarkdown>
+
+            <Card tone="muted" padding="lg" radius="lg">
+              <Stack gap="xs">
+                <BodyText
+                  variant="small"
+                  style={{
+                    color: theme.colors.textMuted,
+                    fontWeight: theme.fontWeight.bold,
+                    letterSpacing: 0.6,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  Source
+                </BodyText>
+                <BodyText variant="small" style={{ color: theme.colors.primary }}>
+                  {state.article.sourceUrl}
+                </BodyText>
+              </Stack>
+            </Card>
+          </Stack>
+        ) : null}
+      </View>
     </ScrollView>
   );
 }

@@ -67,7 +67,7 @@ describe('QuizResultView', () => {
       />,
     );
 
-    expect(getByText('18 / 25')).toBeTruthy();
+    expect(getByText('18 / 25 correct')).toBeTruthy();
     expect(getByText('72%')).toBeTruthy();
     expect(getByText('Identity')).toBeTruthy();
     expect(getByText('Storage')).toBeTruthy();

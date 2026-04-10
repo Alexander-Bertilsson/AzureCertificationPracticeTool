@@ -33,7 +33,6 @@ interface VariantColors {
   backgroundPressed: string;
   backgroundHovered: string;
   text: string;
-  border: string;
 }
 
 interface SizeStyle {
@@ -41,6 +40,7 @@ interface SizeStyle {
   paddingVertical: number;
   fontSize: number;
   minHeight: number;
+  borderRadius: number;
 }
 
 function getVariantColors(theme: Tokens, variant: ButtonVariant): VariantColors {
@@ -51,23 +51,20 @@ function getVariantColors(theme: Tokens, variant: ButtonVariant): VariantColors 
         backgroundPressed: theme.colors.primaryPressed,
         backgroundHovered: theme.colors.primaryPressed,
         text: theme.colors.textInverse,
-        border: theme.colors.primary,
       };
     case 'secondary':
       return {
-        background: theme.colors.surface,
-        backgroundPressed: theme.colors.surfaceMuted,
-        backgroundHovered: theme.colors.surfaceMuted,
-        text: theme.colors.text,
-        border: theme.colors.borderStrong,
+        background: theme.colors.primaryMuted,
+        backgroundPressed: theme.colors.secondaryFixed,
+        backgroundHovered: theme.colors.secondaryFixed,
+        text: theme.colors.onPrimaryFixedVariant,
       };
     case 'ghost':
       return {
         background: 'transparent',
         backgroundPressed: theme.colors.surfaceMuted,
         backgroundHovered: theme.colors.surfaceMuted,
-        text: theme.colors.text,
-        border: 'transparent',
+        text: theme.colors.primary,
       };
     case 'danger':
       return {
@@ -75,7 +72,6 @@ function getVariantColors(theme: Tokens, variant: ButtonVariant): VariantColors 
         backgroundPressed: theme.colors.dangerPressed,
         backgroundHovered: theme.colors.dangerPressed,
         text: theme.colors.textInverse,
-        border: theme.colors.danger,
       };
   }
 }
@@ -88,6 +84,7 @@ function getSizeStyle(theme: Tokens, size: ButtonSize): SizeStyle {
         paddingVertical: theme.spacing.xs,
         fontSize: theme.fontSize.sm,
         minHeight: 32,
+        borderRadius: theme.radius.md,
       };
     case 'md':
       return {
@@ -95,13 +92,15 @@ function getSizeStyle(theme: Tokens, size: ButtonSize): SizeStyle {
         paddingVertical: theme.spacing.sm,
         fontSize: theme.fontSize.md,
         minHeight: 40,
+        borderRadius: theme.radius.lg,
       };
     case 'lg':
       return {
         paddingHorizontal: theme.spacing.xl,
         paddingVertical: theme.spacing.md,
-        fontSize: theme.fontSize.lg,
-        minHeight: 48,
+        fontSize: theme.fontSize.md,
+        minHeight: 52,
+        borderRadius: theme.radius.lg,
       };
   }
 }
@@ -133,18 +132,20 @@ export function Button({
     const style: ViewStyle = {
       alignItems: 'center',
       justifyContent: 'center',
-      borderWidth: 1,
-      borderRadius: theme.radius.md,
+      borderRadius: sizing.borderRadius,
       backgroundColor: background,
-      borderColor: disabled ? theme.colors.border : colors.border,
       paddingHorizontal: sizing.paddingHorizontal,
       paddingVertical: sizing.paddingVertical,
       minHeight: sizing.minHeight,
       opacity: disabled ? 0.6 : 1,
+      ...(variant === 'primary' && !disabled ? theme.shadow.ambient : {}),
     };
 
     if (fullWidth) style.alignSelf = 'stretch';
-    if (state.focused === true && !disabled) style.borderColor = theme.colors.focusRing;
+    if (state.focused === true && !disabled) {
+      style.borderWidth = 2;
+      style.borderColor = theme.colors.focusRing;
+    }
 
     return style;
   };
@@ -152,7 +153,8 @@ export function Button({
   const textStyle: TextStyle = {
     color: disabled ? theme.colors.textMuted : colors.text,
     fontSize: sizing.fontSize,
-    fontWeight: theme.fontWeight.semibold,
+    fontWeight: theme.fontWeight.bold,
+    letterSpacing: 0.2,
   };
 
   return (

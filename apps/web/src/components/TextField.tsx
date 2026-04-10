@@ -34,22 +34,27 @@ export function TextField({
 
   const labelStyle: TextStyle = {
     color: theme.colors.textMuted,
-    fontSize: theme.fontSize.sm,
-    fontWeight: theme.fontWeight.medium,
+    fontSize: theme.fontSize.xs,
+    fontWeight: theme.fontWeight.bold,
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
     marginBottom: theme.spacing.xs,
   };
 
   const inputStyle: TextStyle = {
-    borderWidth: 1,
-    borderColor: hasError ? theme.colors.danger : theme.colors.border,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.surface,
+    backgroundColor: theme.colors.surfaceSunken,
     color: theme.colors.text,
+    borderRadius: theme.radius.lg,
     paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.sm,
     fontSize: theme.fontSize.md,
-    minHeight: 40,
+    minHeight: 44,
   };
+
+  if (hasError) {
+    inputStyle.borderWidth = 2;
+    inputStyle.borderColor = theme.colors.danger;
+  }
 
   const helperStyle: TextStyle = {
     color: hasError ? theme.colors.danger : theme.colors.textMuted,
@@ -57,10 +62,7 @@ export function TextField({
     marginTop: theme.spacing.xs,
   };
 
-  const wrapperStyle: ViewStyle = {
-    flexDirection: 'column',
-  };
-
+  const wrapperStyle: ViewStyle = { flexDirection: 'column' };
   const helperMessage = hasError ? error : helperText;
 
   return (

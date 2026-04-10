@@ -12,13 +12,13 @@ describe('Heading', () => {
     expect(node.props.accessibilityRole).toBe('header');
     const style = flattenStyle(node.props.style);
     expect(style['fontSize']).toBe(tokens.fontSize.xxxl);
-    expect(style['fontWeight']).toBe(tokens.fontWeight.semibold);
+    expect(style['fontWeight']).toBe(tokens.fontWeight.extrabold);
   });
 
   it('scales font size down for lower levels', () => {
     const { getByText } = render(<Heading level={3}>Sub</Heading>);
     const style = flattenStyle(getByText('Sub').props.style);
 
-    expect(style['fontSize']).toBe(tokens.fontSize.xl);
+    expect(style['fontSize']).toBe(tokens.fontSize.lg);
   });
 });

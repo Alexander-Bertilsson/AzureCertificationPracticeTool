@@ -1,6 +1,6 @@
 import type { Topic, TopicId, WikiArticle } from '@acpt/shared';
 import { Link } from 'expo-router';
-import { Pressable, ScrollView } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
 
 import { Badge } from '../../components/Badge';
 import { BodyText } from '../../components/BodyText';
@@ -48,71 +48,92 @@ export function WikiListView({ state }: WikiListViewProps): React.JSX.Element {
   return (
     <ScrollView
       contentContainerStyle={{
-        padding: theme.spacing.xl,
         backgroundColor: theme.colors.background,
         flexGrow: 1,
+        paddingHorizontal: theme.spacing.xxl,
+        paddingVertical: theme.spacing.xxxl,
       }}
       testID="wiki-list-screen"
     >
-      <Stack gap="xl">
-        <Stack gap="xs">
-          <Heading level={1}>Wiki</Heading>
-          <BodyText variant="muted">Bite-sized articles, grouped by topic.</BodyText>
-        </Stack>
+      <View style={{ maxWidth: 1100, width: '100%', alignSelf: 'center' }}>
+        <Stack gap="xxl">
+          <Stack gap="sm">
+            <Badge label="Wiki Library" tone="info" />
+            <Heading level={1}>Azure study wiki</Heading>
+            <BodyText variant="muted">
+              Bite-sized articles, grouped by topic. Pick an article to read.
+            </BodyText>
+          </Stack>
 
-        {state.status === 'loading' ? <Spinner label="Loading wiki" /> : null}
+          {state.status === 'loading' ? <Spinner label="Loading wiki" /> : null}
 
-        {state.status === 'error' ? (
-          <Card>
-            <Stack gap="xs">
-              <Heading level={3}>Couldn&apos;t load the wiki</Heading>
-              <BodyText variant="muted">{state.message}</BodyText>
-            </Stack>
-          </Card>
-        ) : null}
-
-        {state.status === 'success'
-          ? groupArticlesByTopic(state.topics, state.articles).map(({ topic, articles }) => (
-              <Stack key={topic.id} gap="md">
-                <Stack gap="xs">
-                  <Heading level={2}>{topic.title}</Heading>
-                  <BodyText variant="muted">{topic.description}</BodyText>
-                </Stack>
-
-                {articles.length === 0 ? (
-                  <Card>
-                    <BodyText variant="muted">No articles for this topic yet.</BodyText>
-                  </Card>
-                ) : (
-                  <Stack gap="sm">
-                    {articles.map((article) => (
-                      <Link
-                        key={article.id}
-                        href={`/cert/${article.certificationId}/wiki/${article.id}`}
-                        asChild
-                      >
-                        <Pressable testID={`wiki-card-${article.slug}`}>
-                          <Card padding="md">
-                            <Stack gap="xs">
-                              <Row justify="space-between" align="flex-start">
-                                <Heading level={3}>{article.title}</Heading>
-                                <Badge
-                                  label={`${String(article.readingTimeMinutes)} min`}
-                                  tone="neutral"
-                                />
-                              </Row>
-                              <BodyText variant="muted">{article.summary}</BodyText>
-                            </Stack>
-                          </Card>
-                        </Pressable>
-                      </Link>
-                    ))}
-                  </Stack>
-                )}
+          {state.status === 'error' ? (
+            <Card elevated>
+              <Stack gap="xs">
+                <Heading level={3}>Couldn&apos;t load the wiki</Heading>
+                <BodyText variant="muted">{state.message}</BodyText>
               </Stack>
-            ))
-          : null}
-      </Stack>
+            </Card>
+          ) : null}
+
+          {state.status === 'success'
+            ? groupArticlesByTopic(state.topics, state.articles).map(
+                ({ topic, articles }, index) => (
+                  <Stack key={topic.id} gap="lg">
+                    <Stack gap="xs">
+                      <BodyText
+                        variant="small"
+                        style={{
+                          color: theme.colors.tertiary,
+                          fontWeight: theme.fontWeight.bold,
+                          letterSpacing: 0.6,
+                          textTransform: 'uppercase',
+                        }}
+                      >
+                        {`Topic ${String(index + 1).padStart(2, '0')}`}
+                      </BodyText>
+                      <Heading level={2}>{topic.title}</Heading>
+                      <BodyText variant="muted">{topic.description}</BodyText>
+                    </Stack>
+
+                    {articles.length === 0 ? (
+                      <Card elevated>
+                        <BodyText variant="muted">No articles for this topic yet.</BodyText>
+                      </Card>
+                    ) : (
+                      <Stack gap="md">
+                        {articles.map((article) => (
+                          <Link
+                            key={article.id}
+                            href={`/cert/${article.certificationId}/wiki/${article.id}`}
+                            asChild
+                          >
+                            <Pressable testID={`wiki-card-${article.slug}`}>
+                              <Card padding="xl" radius="xl" elevated>
+                                <Stack gap="sm">
+                                  <Row justify="space-between" align="flex-start">
+                                    <View style={{ flex: 1 }}>
+                                      <Heading level={3}>{article.title}</Heading>
+                                    </View>
+                                    <Badge
+                                      label={`${String(article.readingTimeMinutes)} min read`}
+                                      tone="success"
+                                    />
+                                  </Row>
+                                  <BodyText variant="muted">{article.summary}</BodyText>
+                                </Stack>
+                              </Card>
+                            </Pressable>
+                          </Link>
+                        ))}
+                      </Stack>
+                    )}
+                  </Stack>
+                ),
+              )
+            : null}
+        </Stack>
+      </View>
     </ScrollView>
   );
 }

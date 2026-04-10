@@ -26,22 +26,27 @@ export function CertificationListView({ state }: CertificationListViewProps): Re
   return (
     <ScrollView
       contentContainerStyle={{
-        padding: theme.spacing.xl,
         backgroundColor: theme.colors.background,
         flexGrow: 1,
+        paddingHorizontal: theme.spacing.xxl,
+        paddingVertical: theme.spacing.xxxl,
       }}
       testID="cert-list-screen"
     >
-      <Stack gap="xl">
-        <Stack gap="xs">
-          <Heading level={1}>Certifications</Heading>
-          <BodyText variant="muted">Pick a certification to start studying.</BodyText>
+      <Stack gap="xxl" style={{ maxWidth: 960, width: '100%', alignSelf: 'center' }}>
+        <Stack gap="sm">
+          <Badge label="Certification Library" tone="info" />
+          <Heading level={1}>Choose a certification</Heading>
+          <BodyText variant="muted">
+            Pick a track to study. Wiki articles, practice quizzes, and your progress dashboard live
+            inside each certification.
+          </BodyText>
         </Stack>
 
         {state.status === 'loading' ? <Spinner label="Loading certifications" /> : null}
 
         {state.status === 'error' ? (
-          <Card>
+          <Card elevated>
             <Stack gap="xs">
               <Heading level={3}>Couldn&apos;t load certifications</Heading>
               <BodyText variant="muted">{state.message}</BodyText>
@@ -50,7 +55,7 @@ export function CertificationListView({ state }: CertificationListViewProps): Re
         ) : null}
 
         {state.status === 'success' && state.items.length === 0 ? (
-          <Card>
+          <Card elevated>
             <BodyText variant="muted">
               No certifications found. Run <BodyText>pnpm seed</BodyText> to populate content.
             </BodyText>
@@ -58,15 +63,18 @@ export function CertificationListView({ state }: CertificationListViewProps): Re
         ) : null}
 
         {state.status === 'success' && state.items.length > 0 ? (
-          <Stack gap="md">
+          <Stack gap="lg">
             {state.items.map((cert) => (
               <Link key={cert.id} href={`/cert/${cert.id}`} asChild>
                 <Pressable testID={`cert-card-${cert.code}`}>
-                  <Card>
-                    <Stack gap="sm">
+                  <Card padding="xl" radius="xl" elevated>
+                    <Stack gap="md">
                       <Row justify="space-between" align="flex-start">
-                        <Heading level={2}>{cert.title}</Heading>
-                        <Badge label={cert.code} tone="info" />
+                        <Stack gap="xs" style={{ flex: 1 }}>
+                          <Badge label="Certification Track" tone="info" />
+                          <Heading level={2}>{cert.title}</Heading>
+                        </Stack>
+                        <Badge label={cert.code} tone="success" />
                       </Row>
                       <BodyText variant="muted">{cert.description}</BodyText>
                     </Stack>

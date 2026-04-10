@@ -19,15 +19,30 @@ interface BadgeColors {
 function getBadgeColors(theme: Tokens, tone: BadgeTone): BadgeColors {
   switch (tone) {
     case 'neutral':
-      return { background: theme.colors.surfaceMuted, text: theme.colors.textMuted };
+      return {
+        background: theme.colors.surfaceSunken,
+        text: theme.colors.textMuted,
+      };
     case 'info':
-      return { background: theme.colors.primaryMuted, text: theme.colors.primaryPressed };
+      return {
+        background: theme.colors.primaryMuted,
+        text: theme.colors.onPrimaryFixedVariant,
+      };
     case 'success':
-      return { background: theme.colors.primaryMuted, text: theme.colors.success };
+      return {
+        background: theme.colors.tertiaryFixed,
+        text: theme.colors.onTertiaryFixedVariant,
+      };
     case 'warning':
-      return { background: theme.colors.primaryMuted, text: theme.colors.warning };
+      return {
+        background: theme.colors.secondaryFixed,
+        text: theme.colors.onSecondaryFixedVariant,
+      };
     case 'danger':
-      return { background: theme.colors.primaryMuted, text: theme.colors.danger };
+      return {
+        background: theme.colors.errorContainer,
+        text: theme.colors.onErrorContainer,
+      };
   }
 }
 
@@ -39,14 +54,15 @@ export function Badge({ label, tone = 'neutral', testID }: BadgeProps): React.JS
     alignSelf: 'flex-start',
     backgroundColor: colors.background,
     borderRadius: theme.radius.pill,
-    paddingHorizontal: theme.spacing.sm,
+    paddingHorizontal: theme.spacing.md,
     paddingVertical: theme.spacing.xs,
   };
 
   const textStyle: TextStyle = {
     color: colors.text,
     fontSize: theme.fontSize.xs,
-    fontWeight: theme.fontWeight.medium,
+    fontWeight: theme.fontWeight.bold,
+    letterSpacing: 0.4,
   };
 
   return (

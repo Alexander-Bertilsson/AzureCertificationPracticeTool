@@ -1,6 +1,6 @@
 import type { PerTopicScore, QuizSession, Topic } from '@acpt/shared';
 import { Link } from 'expo-router';
-import { Pressable, ScrollView } from 'react-native';
+import { Pressable, ScrollView, View, type DimensionValue } from 'react-native';
 
 import { Badge } from '../../components/Badge';
 import { BodyText } from '../../components/BodyText';
@@ -52,87 +52,175 @@ export function QuizResultView({ state }: QuizResultViewProps): React.JSX.Elemen
   return (
     <ScrollView
       contentContainerStyle={{
-        padding: theme.spacing.xl,
         backgroundColor: theme.colors.background,
         flexGrow: 1,
+        paddingHorizontal: theme.spacing.xxl,
+        paddingVertical: theme.spacing.xxxl,
       }}
       testID="quiz-result-screen"
     >
-      {state.status === 'loading' ? <Spinner label="Finishing quiz" /> : null}
+      <View style={{ maxWidth: 1100, width: '100%', alignSelf: 'center' }}>
+        {state.status === 'loading' ? <Spinner label="Finishing quiz" /> : null}
 
-      {state.status === 'error' ? (
-        <Card>
-          <Stack gap="xs">
-            <Heading level={3}>Couldn&apos;t finish the quiz</Heading>
-            <BodyText variant="muted">{state.message}</BodyText>
-          </Stack>
-        </Card>
-      ) : null}
-
-      {state.status === 'success' && state.session.score !== undefined ? (
-        <Stack gap="xl">
-          <Stack gap="xs">
-            <Heading level={1}>Quiz complete</Heading>
-            <BodyText variant="muted">
-              {state.session.feedbackMode === 'practice' ? 'Practice' : 'Exam'} mode,{' '}
-              {String(state.session.length)} questions.
-            </BodyText>
-          </Stack>
-
-          <Card>
-            <Stack gap="sm">
-              <Heading level={2}>
-                {String(state.session.score.correct)} / {String(state.session.score.total)}
-              </Heading>
-              <Row gap="sm" align="center">
-                <Badge
-                  label={formatPercent(
-                    state.session.score.total === 0
-                      ? 0
-                      : state.session.score.correct / state.session.score.total,
-                  )}
-                  tone="info"
-                />
-                <BodyText variant="muted">Overall accuracy</BodyText>
-              </Row>
+        {state.status === 'error' ? (
+          <Card elevated>
+            <Stack gap="xs">
+              <Heading level={3}>Couldn&apos;t finish the quiz</Heading>
+              <BodyText variant="muted">{state.message}</BodyText>
             </Stack>
           </Card>
+        ) : null}
 
-          <Stack gap="md">
-            <Heading level={2}>Per topic</Heading>
-            {buildPerTopicRows(state.session.score.perTopic, state.topics).map((row) => (
-              <Card key={row.topicId} padding="md">
-                <Stack gap="xs">
-                  <Row justify="space-between" align="center">
-                    <Heading level={3}>{row.title}</Heading>
-                    <Badge label={formatPercent(row.accuracy)} tone="neutral" />
+        {state.status === 'success' && state.session.score !== undefined
+          ? (() => {
+              const score = state.session.score;
+              const overall = score.total === 0 ? 0 : score.correct / score.total;
+              const rows = buildPerTopicRows(score.perTopic, state.topics);
+              return (
+                <Stack gap="xxl">
+                  <Row gap="lg" wrap align="stretch">
+                    <View style={{ flex: 2, minWidth: 320 }}>
+                      <Card padding="xl" radius="xxl" elevated>
+                        <Stack gap="md">
+                          <Badge label="Final Results" tone="success" />
+                          <Heading level={1}>Quiz complete.</Heading>
+                          <BodyText variant="muted">
+                            {state.session.feedbackMode === 'practice' ? 'Practice' : 'Exam'} mode,{' '}
+                            {String(state.session.length)} questions.
+                          </BodyText>
+                        </Stack>
+                      </Card>
+                    </View>
+                    <View style={{ flex: 1, minWidth: 260 }}>
+                      <View
+                        style={{
+                          backgroundColor: theme.colors.primary,
+                          borderRadius: theme.radius.xxl,
+                          padding: theme.spacing.xl,
+                          ...theme.shadow.ambient,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          minHeight: 200,
+                        }}
+                      >
+                        <BodyText
+                          variant="small"
+                          style={{
+                            color: theme.colors.textInverse,
+                            opacity: 0.8,
+                            fontWeight: theme.fontWeight.bold,
+                            letterSpacing: 0.6,
+                            textTransform: 'uppercase',
+                          }}
+                        >
+                          Overall Score
+                        </BodyText>
+                        <Heading
+                          level={1}
+                          style={{
+                            color: theme.colors.textInverse,
+                            fontSize: theme.fontSize.display,
+                          }}
+                        >
+                          {formatPercent(overall)}
+                        </Heading>
+                        <BodyText
+                          style={{
+                            color: theme.colors.textInverse,
+                            fontWeight: theme.fontWeight.bold,
+                          }}
+                        >
+                          {String(score.correct)} / {String(score.total)} correct
+                        </BodyText>
+                      </View>
+                    </View>
                   </Row>
-                  <BodyText variant="muted">
-                    {String(row.correct)} of {String(row.total)} correct
-                  </BodyText>
-                </Stack>
-              </Card>
-            ))}
-          </Stack>
 
-          <Row gap="md" wrap>
-            <Link href={`/cert/${state.session.certificationId}`} asChild>
-              <Pressable testID="back-to-cert-home">
-                <Card padding="md">
-                  <BodyText>Back to cert home</BodyText>
-                </Card>
-              </Pressable>
-            </Link>
-            <Link href={`/cert/${state.session.certificationId}/quiz`} asChild>
-              <Pressable testID="start-another-quiz">
-                <Card padding="md">
-                  <BodyText>Start another quiz</BodyText>
-                </Card>
-              </Pressable>
-            </Link>
-          </Row>
-        </Stack>
-      ) : null}
+                  <Stack gap="lg">
+                    <Heading level={2}>Topic mastery</Heading>
+                    {rows.length === 0 ? (
+                      <Card elevated>
+                        <BodyText variant="muted">No per-topic data for this session.</BodyText>
+                      </Card>
+                    ) : (
+                      rows.map((row) => (
+                        <Card key={row.topicId} padding="lg" radius="lg" elevated>
+                          <Stack gap="sm">
+                            <Row justify="space-between" align="center">
+                              <Heading level={3}>{row.title}</Heading>
+                              <BodyText
+                                style={{
+                                  color:
+                                    row.accuracy >= 0.8
+                                      ? theme.colors.tertiary
+                                      : row.accuracy >= 0.6
+                                        ? theme.colors.secondary
+                                        : theme.colors.danger,
+                                  fontWeight: theme.fontWeight.bold,
+                                }}
+                              >
+                                {formatPercent(row.accuracy)}
+                              </BodyText>
+                            </Row>
+                            <View
+                              style={{
+                                height: 8,
+                                backgroundColor: theme.colors.surfaceHighest,
+                                borderRadius: theme.radius.pill,
+                                overflow: 'hidden',
+                              }}
+                            >
+                              <View
+                                style={{
+                                  width:
+                                    `${String(Math.round(row.accuracy * 100))}%` as DimensionValue,
+                                  height: '100%',
+                                  backgroundColor:
+                                    row.accuracy >= 0.6
+                                      ? theme.colors.secondaryContainer
+                                      : theme.colors.danger,
+                                }}
+                              />
+                            </View>
+                            <BodyText variant="muted">
+                              {String(row.correct)} of {String(row.total)} correct
+                            </BodyText>
+                          </Stack>
+                        </Card>
+                      ))
+                    )}
+                  </Stack>
+
+                  <Row gap="md" wrap>
+                    <Link href={`/cert/${state.session.certificationId}`} asChild>
+                      <Pressable testID="back-to-cert-home" style={{ flex: 1, minWidth: 220 }}>
+                        <Card padding="lg" radius="lg" tone="muted">
+                          <BodyText style={{ fontWeight: theme.fontWeight.bold }}>
+                            ← Back to cert home
+                          </BodyText>
+                        </Card>
+                      </Pressable>
+                    </Link>
+                    <Link href={`/cert/${state.session.certificationId}/quiz`} asChild>
+                      <Pressable testID="start-another-quiz" style={{ flex: 1, minWidth: 220 }}>
+                        <Card padding="lg" radius="lg" tone="muted">
+                          <BodyText
+                            style={{
+                              fontWeight: theme.fontWeight.bold,
+                              color: theme.colors.primary,
+                            }}
+                          >
+                            Start another quiz →
+                          </BodyText>
+                        </Card>
+                      </Pressable>
+                    </Link>
+                  </Row>
+                </Stack>
+              );
+            })()
+          : null}
+      </View>
     </ScrollView>
   );
 }
