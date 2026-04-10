@@ -24,6 +24,9 @@ const config = {
   // Coverage thresholds enabled in feature module commits, not on the empty scaffold.
   clearMocks: true,
   restoreMocks: true,
+  // mongodb-memory-server's first boot on Windows can take 10–20s. Default of 5s is
+  // too tight for beforeAll hooks that start the in-memory mongod.
+  testTimeout: 30000,
 };
 
 module.exports = config;

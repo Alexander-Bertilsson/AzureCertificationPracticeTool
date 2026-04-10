@@ -44,6 +44,22 @@ export function errorHandler(
     return;
   }
 
+  // Fastify wraps schema validation failures (including ones produced by the
+  // zod type provider) in a FastifyError with `validation` set and statusCode 400.
+  const fastifyErr = err as FastifyError & { validation?: unknown };
+  if (Array.isArray(fastifyErr.validation)) {
+    req.log.warn({ err, requestId }, 'request validation failed');
+    void reply.status(fastifyErr.statusCode ?? 400).send({
+      error: {
+        code: 'VALIDATION_ERROR',
+        message: err.message,
+        details: fastifyErr.validation,
+        requestId,
+      },
+    } satisfies ErrorEnvelope);
+    return;
+  }
+
   // Unknown error: log the full thing at error level so we never lose context,
   // then return a generic 500 to the client.
   req.log.error({ err, requestId }, 'unhandled error');

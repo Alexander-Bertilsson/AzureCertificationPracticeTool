@@ -39,8 +39,9 @@ export default [
     },
   },
   {
-    // Allow mongoose / *.model imports inside repository files (the only place they belong).
-    files: ['**/*.repository.ts', '**/*.model.ts', '**/db/**'],
+    // Allow mongoose / *.model imports inside repository files (the only place they belong)
+    // and inside test code (tests need to exercise the real DB layer).
+    files: ['**/*.repository.ts', '**/*.model.ts', '**/db/**', '**/__tests__/**', '**/test/**'],
     rules: {
       'no-restricted-imports': 'off',
     },
