@@ -1,0 +1,25 @@
+# Expo CLI manages this file. Most ignores already live in the root
+# .gitignore — these are the per-app ones Expo expects to upsert into.
+
+# Expo build artifacts
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# Native build outputs
+*.orig.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+
+# Metro
+.metro-health-check*
+
+# Local env overrides
+.env*.local
+
+# TS incremental build cache
+*.tsbuildinfo
