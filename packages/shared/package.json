@@ -12,7 +12,10 @@
       "default": "./dist/index.js"
     }
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "scripts": {
     "build": "tsc -b",
     "typecheck": "tsc -b --noEmit",
@@ -20,5 +23,9 @@
     "test": "echo \"no tests yet\" && exit 0",
     "test:coverage": "echo \"no tests yet\" && exit 0",
     "clean": "rm -rf dist *.tsbuildinfo"
+  },
+  "devDependencies": {
+    "@acpt/tsconfig": "workspace:*",
+    "@types/node": "^20.16.0"
   }
 }
