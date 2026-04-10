@@ -5,8 +5,8 @@
   "main": "expo-router/entry",
   "description": "Expo (managed) web + native app for the Azure Certification Practice Tool.",
   "scripts": {
-    "start": "expo start",
-    "web": "expo start --web",
+    "start": "node scripts/dev-web.cjs",
+    "web": "node scripts/dev-web.cjs",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "build": "tsc -b",
