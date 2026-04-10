@@ -137,3 +137,23 @@ dist
 # Vite logs files
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+
+# --- Project additions ---
+
+# Expo
+.expo/
+expo-env.d.ts
+web-build/
+
+# Local Claude Code overrides (committed: .claude/settings.json)
+.claude/settings.local.json
+
+# Random Windows crash dumps
+*.stackdump
+
+# Build artifacts
+**/dist/
+**/build/
+
+# pnpm
+.pnpm-store/

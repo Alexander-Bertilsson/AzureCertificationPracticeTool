@@ -1,0 +1,26 @@
+{
+  "name": "azure-certification-practice-tool",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Study tool for Microsoft Azure certifications. Wiki articles + practice quizzes derived from Microsoft Learn.",
+  "packageManager": "pnpm@9.15.9",
+  "engines": {
+    "node": ">=20.11.0 <21",
+    "pnpm": ">=9 <10"
+  },
+  "scripts": {
+    "typecheck": "tsc -b",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "pnpm -r --parallel run test",
+    "test:coverage": "pnpm -r --parallel run test:coverage",
+    "verify": "pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
+    "db:up": "docker compose up -d mongo",
+    "db:down": "docker compose down",
+    "seed": "pnpm --filter @acpt/api run seed",
+    "dev:api": "pnpm --filter @acpt/api run dev",
+    "dev:web": "pnpm --filter @acpt/web run web"
+  }
+}

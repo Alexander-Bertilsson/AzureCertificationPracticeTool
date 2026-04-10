@@ -1,0 +1,5 @@
+{
+  "//": "Solution-style root tsconfig. Lists project references for `tsc -b`. Each referenced package must declare composite: true.",
+  "files": [],
+  "references": [{ "path": "packages/shared" }]
+}

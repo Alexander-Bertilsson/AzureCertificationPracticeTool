@@ -1,0 +1,23 @@
+{
+  "name": "@acpt/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared ESLint flat-config presets for the monorepo. base / node / react-native variants.",
+  "exports": {
+    "./base": "./base.mjs",
+    "./node": "./node.mjs",
+    "./react-native": "./react-native.mjs"
+  },
+  "files": ["base.mjs", "node.mjs", "react-native.mjs"],
+  "peerDependencies": {
+    "eslint": "^9.0.0",
+    "typescript-eslint": "^8.0.0",
+    "@eslint/js": "^9.0.0",
+    "eslint-plugin-import-x": "^4.0.0",
+    "eslint-plugin-unused-imports": "^4.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-react": "^7.0.0",
+    "eslint-plugin-react-hooks": "^5.0.0"
+  }
+}
