@@ -10,8 +10,8 @@
     "start": "node dist/src/server.js",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",
-    "test": "jest",
-    "test:coverage": "jest --coverage",
+    "test": "jest --runInBand",
+    "test:coverage": "jest --runInBand --coverage",
     "seed": "tsx src/scripts/seed.ts"
   },
   "dependencies": {
