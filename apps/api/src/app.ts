@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { errorHandler } from './common/middleware/error-handler.js';
 import { env } from './config/env.js';
 import { registerCertificationRoutes } from './modules/certifications/certification.routes.js';
+import { registerProgressRoutes } from './modules/progress/progress.routes.js';
 import { registerQuestionRoutes } from './modules/questions/question.routes.js';
 import { registerQuizSessionRoutes } from './modules/quiz-sessions/quiz-session.routes.js';
 import { registerTopicRoutes } from './modules/topics/topic.routes.js';
@@ -87,6 +88,7 @@ export async function buildApp(): Promise<FastifyInstance> {
       registerWikiRoutes(v1);
       registerQuestionRoutes(v1);
       registerQuizSessionRoutes(v1);
+      registerProgressRoutes(v1);
       done();
     },
     { prefix: '/api/v1' },
