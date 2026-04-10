@@ -75,6 +75,7 @@ describe('WikiListView', () => {
           status: 'success',
           topics: [storage, identity],
           articles: [storageArticle, identityArticle],
+          activeTopicId: null,
         }}
       />,
     );
@@ -92,9 +93,32 @@ describe('WikiListView', () => {
           status: 'success',
           topics: [makeTopic()],
           articles: [],
+          activeTopicId: null,
         }}
       />,
     );
     expect(getByText('No articles for this topic yet.')).toBeTruthy();
+  });
+
+  it('shows only the chosen topic as a hero when activeTopicId is set', () => {
+    const identity = makeTopic();
+    const identityArticle = makeArticle();
+
+    const { getByText, queryByText } = render(
+      <WikiListView
+        state={{
+          status: 'success',
+          topics: [identity],
+          articles: [identityArticle],
+          activeTopicId: IDENTITY_TOPIC_ID,
+        }}
+      />,
+    );
+
+    // Topic title becomes the hero heading.
+    expect(getByText(identity.title)).toBeTruthy();
+    expect(getByText(identity.description)).toBeTruthy();
+    // No "Topic 01" eyebrow since the sidebar has already answered that.
+    expect(queryByText('Topic 01')).toBeNull();
   });
 });
