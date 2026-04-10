@@ -11,7 +11,11 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["app/**/*", "src/**/*", "expo-env.d.ts"],
+  "include": ["app/**/*", "src/**/*"],
   "exclude": ["dist", "node_modules", ".expo"],
-  "references": [{ "path": "../../packages/shared" }]
+  "references": [
+    {
+      "path": "../../packages/shared"
+    }
+  ]
 }

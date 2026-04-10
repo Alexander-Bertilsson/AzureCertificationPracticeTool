@@ -4,7 +4,6 @@
     "slug": "azure-cert-practice",
     "version": "0.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "scheme": "acpt",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -22,8 +21,7 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "single",
-      "favicon": "./assets/favicon.png"
+      "output": "single"
     },
     "plugins": ["expo-router"],
     "experiments": {
