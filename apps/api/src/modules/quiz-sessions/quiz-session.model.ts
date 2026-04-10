@@ -5,6 +5,7 @@ const quizSessionSchema = new Schema(
     userId: { type: String, required: true },
     certificationId: { type: Types.ObjectId, ref: 'Certification', required: true },
     mode: { type: String, required: true, enum: ['single-topic', 'mixed'] },
+    feedbackMode: { type: String, required: true, enum: ['practice', 'exam'] },
     topicId: { type: Types.ObjectId, ref: 'Topic' },
     length: { type: Number, required: true, enum: [25, 50] },
     questionIds: { type: [Types.ObjectId], required: true, default: [] },

@@ -1,4 +1,5 @@
 import {
+  type AttemptResultResponse,
   type CreateQuizSessionRequest,
   type PerTopicScore,
   type PresentedQuestion,
@@ -83,6 +84,7 @@ export async function createQuizSession(
     userId,
     certificationId: request.certificationId,
     mode: request.mode,
+    feedbackMode: request.feedbackMode,
     length: request.length,
     questionIds: sampled.map((q) => q.id),
     ...(request.topicId !== undefined ? { topicId: request.topicId } : {}),
@@ -107,13 +109,7 @@ export async function submitQuizAttempt(
   userId: string,
   sessionId: QuizSessionId,
   request: SubmitAttemptRequest,
-): Promise<{
-  questionId: typeof request.questionId;
-  isCorrect: boolean;
-  correctChoiceIds: Question['correctChoiceIds'];
-  explanation: string;
-  sourceUrl: string;
-}> {
+): Promise<AttemptResultResponse> {
   const session = await requireSessionForUser(userId, sessionId);
 
   if (session.status !== 'in-progress') {
@@ -144,6 +140,8 @@ export async function submitQuizAttempt(
   const correct = new Set(question.correctChoiceIds);
   const isCorrect = selected.size === correct.size && [...selected].every((id) => correct.has(id));
 
+  // Always persist the attempt with the real isCorrect value — the score
+  // computation in `complete` reads from this collection regardless of mode.
   await createAttempt({
     userId,
     quizSessionId: sessionId,
@@ -154,12 +152,23 @@ export async function submitQuizAttempt(
     isCorrect,
   });
 
+  // The response shape depends on the session's feedback mode. In `exam` mode
+  // we deliberately do NOT leak the answer key so the user has to wait until
+  // they complete the session.
+  if (session.feedbackMode === 'practice') {
+    return {
+      questionId: question.id,
+      revealed: true,
+      isCorrect,
+      correctChoiceIds: question.correctChoiceIds,
+      explanation: question.explanation,
+      sourceUrl: question.sourceUrl,
+    };
+  }
+
   return {
     questionId: question.id,
-    isCorrect,
-    correctChoiceIds: question.correctChoiceIds,
-    explanation: question.explanation,
-    sourceUrl: question.sourceUrl,
+    revealed: false,
   };
 }
 

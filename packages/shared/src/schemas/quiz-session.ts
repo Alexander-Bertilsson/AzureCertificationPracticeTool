@@ -14,6 +14,22 @@ export type AttemptId = z.infer<typeof AttemptIdSchema>;
 export const QuizModeSchema = z.enum(['single-topic', 'mixed']);
 export type QuizMode = z.infer<typeof QuizModeSchema>;
 
+/**
+ * How aggressively the answer key is revealed during the quiz.
+ *
+ * - `practice` reveals the correct answer + explanation + source link on every
+ *   `POST /attempts` response. Useful for studying — wrong answers turn into
+ *   immediate learning moments.
+ * - `exam` simulates a real certification test. The submit-attempt response
+ *   only acknowledges that the answer was recorded; correctness, explanations,
+ *   and the score are not revealed until the session is `complete`d.
+ *
+ * The attempt is persisted with the correct `isCorrect` value either way —
+ * the difference is purely what the response body discloses to the user.
+ */
+export const FeedbackModeSchema = z.enum(['practice', 'exam']);
+export type FeedbackMode = z.infer<typeof FeedbackModeSchema>;
+
 export const QuizLengthSchema = z.union([z.literal(25), z.literal(50)]);
 export type QuizLength = z.infer<typeof QuizLengthSchema>;
 
@@ -46,6 +62,7 @@ export const QuizSessionSchema = z
     userId: z.string(),
     certificationId: CertificationIdSchema,
     mode: QuizModeSchema,
+    feedbackMode: FeedbackModeSchema,
     topicId: TopicIdSchema.optional(),
     length: QuizLengthSchema,
     questionIds: z.array(QuestionIdSchema),
@@ -78,6 +95,7 @@ export const CreateQuizSessionRequestSchema = z
   .object({
     certificationId: CertificationIdSchema,
     mode: QuizModeSchema,
+    feedbackMode: FeedbackModeSchema,
     topicId: TopicIdSchema.optional(),
     length: QuizLengthSchema,
   })
@@ -125,16 +143,30 @@ export const SubmitAttemptRequestSchema = z.object({
 export type SubmitAttemptRequest = z.infer<typeof SubmitAttemptRequestSchema>;
 
 /**
- * Response for POST /quiz-sessions/:sessionId/attempts. Reveals the answer key
- * and explanation for the question that was just submitted.
+ * Response for POST /quiz-sessions/:sessionId/attempts.
+ *
+ * Discriminated on `revealed`:
+ *
+ * - `revealed: true` — practice mode. Reveals the answer key, explanation,
+ *   and source link so the user can study right away.
+ * - `revealed: false` — exam mode. Just acknowledges receipt. The attempt is
+ *   still persisted server-side with the correct `isCorrect` value; the user
+ *   only finds out the answer when they call `POST /complete`.
  */
-export const AttemptResultResponseSchema = z.object({
-  questionId: QuestionIdSchema,
-  isCorrect: z.boolean(),
-  correctChoiceIds: z.array(ChoiceIdSchema),
-  explanation: z.string(),
-  sourceUrl: z.string().url(),
-});
+export const AttemptResultResponseSchema = z.discriminatedUnion('revealed', [
+  z.object({
+    questionId: QuestionIdSchema,
+    revealed: z.literal(true),
+    isCorrect: z.boolean(),
+    correctChoiceIds: z.array(ChoiceIdSchema),
+    explanation: z.string(),
+    sourceUrl: z.string().url(),
+  }),
+  z.object({
+    questionId: QuestionIdSchema,
+    revealed: z.literal(false),
+  }),
+]);
 export type AttemptResultResponse = z.infer<typeof AttemptResultResponseSchema>;
 
 /**

@@ -93,13 +93,13 @@ describe('quiz-sessions HTTP', () => {
     return { certId: cert.id, topicAId: topicA.id, topicBId: topicB.id, correctByQuestion };
   }
 
-  it('POST /quiz-sessions creates a 25-question mixed session and strips the answer key', async () => {
+  it('POST /quiz-sessions creates a 25-question mixed practice session and strips the answer key from presented questions', async () => {
     const { certId } = await seedQuizContent();
 
     const response = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: certId, mode: 'mixed', length: 25 },
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'practice', length: 25 },
     });
 
     expect(response.statusCode).toBe(200);
@@ -107,6 +107,7 @@ describe('quiz-sessions HTTP', () => {
     expect(body.session.status).toBe('in-progress');
     expect(body.session.length).toBe(25);
     expect(body.session.mode).toBe('mixed');
+    expect(body.session.feedbackMode).toBe('practice');
     expect(body.session.questionIds).toHaveLength(25);
     expect(body.questions).toHaveLength(25);
 
@@ -128,7 +129,12 @@ describe('quiz-sessions HTTP', () => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: certId, mode: 'single-topic', length: 25 },
+      payload: {
+        certificationId: certId,
+        mode: 'single-topic',
+        feedbackMode: 'practice',
+        length: 25,
+      },
     });
 
     expect(response.statusCode).toBe(400);
@@ -148,7 +154,12 @@ describe('quiz-sessions HTTP', () => {
     const response = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: cert.id, mode: 'mixed', length: 25 },
+      payload: {
+        certificationId: cert.id,
+        mode: 'mixed',
+        feedbackMode: 'practice',
+        length: 25,
+      },
     });
 
     expect(response.statusCode).toBe(409);
@@ -162,7 +173,7 @@ describe('quiz-sessions HTTP', () => {
     const created = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: certId, mode: 'mixed', length: 25 },
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'practice', length: 25 },
     });
     const createBody = QuizSessionResponseSchema.parse(created.json());
 
@@ -177,19 +188,17 @@ describe('quiz-sessions HTTP', () => {
     expect(resumedBody.questions.map((q) => q.id)).toEqual(createBody.questions.map((q) => q.id));
   });
 
-  it('full happy path: create → answer all 25 correctly → complete returns 25/25', async () => {
+  it('practice mode: full happy path → answer 25 correctly → complete returns 25/25 and each attempt reveals the answer', async () => {
     const { certId, correctByQuestion } = await seedQuizContent();
 
-    // 1. Create
     const created = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: certId, mode: 'mixed', length: 25 },
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'practice', length: 25 },
     });
     const createBody = QuizSessionResponseSchema.parse(created.json());
     const sessionId = createBody.session.id;
 
-    // 2. Answer every question with the correct choice
     for (const question of createBody.questions) {
       const correct = correctByQuestion.get(question.id);
       expect(correct).toBeDefined();
@@ -203,12 +212,16 @@ describe('quiz-sessions HTTP', () => {
       expect(attempt.statusCode).toBe(200);
       const result = AttemptResultResponseSchema.parse(attempt.json());
       expect(result.questionId).toBe(question.id);
+      // Practice mode: the response is the revealed variant of the union.
+      if (!result.revealed) {
+        throw new Error('Expected practice-mode response to reveal the answer key');
+      }
       expect(result.isCorrect).toBe(true);
       expect(result.correctChoiceIds).toEqual([correct]);
       expect(result.explanation).toContain('Explanation for question');
+      expect(result.sourceUrl).toMatch(/^https:/);
     }
 
-    // 3. Complete and verify the score
     const completed = await app.inject({
       method: 'POST',
       url: `/api/v1/quiz-sessions/${sessionId}/complete`,
@@ -227,13 +240,83 @@ describe('quiz-sessions HTTP', () => {
     expect(summary.session.userId).toBe(HARDCODED_USER_ID);
   });
 
+  it('exam mode: each attempt response only acknowledges receipt and never leaks the answer key', async () => {
+    const { certId, correctByQuestion } = await seedQuizContent();
+
+    const created = await app.inject({
+      method: 'POST',
+      url: '/api/v1/quiz-sessions',
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'exam', length: 25 },
+    });
+    const createBody = QuizSessionResponseSchema.parse(created.json());
+    expect(createBody.session.feedbackMode).toBe('exam');
+
+    // Submit a single attempt and inspect the response shape
+    const firstQuestion = createBody.questions[0];
+    expect(firstQuestion).toBeDefined();
+    if (!firstQuestion) return;
+
+    const correct = correctByQuestion.get(firstQuestion.id);
+    expect(correct).toBeDefined();
+
+    const attempt = await app.inject({
+      method: 'POST',
+      url: `/api/v1/quiz-sessions/${createBody.session.id}/attempts`,
+      payload: { questionId: firstQuestion.id, selectedChoiceIds: [correct] },
+    });
+
+    expect(attempt.statusCode).toBe(200);
+    const result = AttemptResultResponseSchema.parse(attempt.json());
+    expect(result.questionId).toBe(firstQuestion.id);
+    expect(result.revealed).toBe(false);
+
+    // Defense-in-depth: spot-check the raw JSON to confirm the answer key
+    // and explanation are NOT present, even as null/undefined fields.
+    const raw = z.record(z.string(), z.unknown()).parse(attempt.json());
+    expect(raw).not.toHaveProperty('isCorrect');
+    expect(raw).not.toHaveProperty('correctChoiceIds');
+    expect(raw).not.toHaveProperty('explanation');
+    expect(raw).not.toHaveProperty('sourceUrl');
+  });
+
+  it('exam mode: completing the session still produces an accurate score from persisted attempts', async () => {
+    const { certId, correctByQuestion } = await seedQuizContent();
+
+    const created = await app.inject({
+      method: 'POST',
+      url: '/api/v1/quiz-sessions',
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'exam', length: 25 },
+    });
+    const createBody = QuizSessionResponseSchema.parse(created.json());
+
+    // Answer all 25 correctly even though the user can't see the result.
+    for (const question of createBody.questions) {
+      const correct = correctByQuestion.get(question.id);
+      await app.inject({
+        method: 'POST',
+        url: `/api/v1/quiz-sessions/${createBody.session.id}/attempts`,
+        payload: { questionId: question.id, selectedChoiceIds: [correct] },
+      });
+    }
+
+    const completed = await app.inject({
+      method: 'POST',
+      url: `/api/v1/quiz-sessions/${createBody.session.id}/complete`,
+    });
+    const summary = QuizSessionSummaryResponseSchema.parse(completed.json());
+
+    // The persisted attempts had isCorrect: true, so the final score adds up.
+    expect(summary.session.score?.correct).toBe(25);
+    expect(summary.session.score?.total).toBe(25);
+  });
+
   it('mixed correct/incorrect answers produce the right score and per-topic breakdown', async () => {
     const { certId, topicAId, correctByQuestion } = await seedQuizContent();
 
     const created = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: certId, mode: 'mixed', length: 25 },
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'practice', length: 25 },
     });
     const createBody = QuizSessionResponseSchema.parse(created.json());
 
@@ -256,11 +339,8 @@ describe('quiz-sessions HTTP', () => {
 
     expect(summary.session.score?.correct).toBe(24);
     expect(summary.session.score?.total).toBe(25);
-    // Both topics should appear in perTopic since the questions came from both.
     const perTopic = summary.session.score?.perTopic ?? {};
     expect(Object.keys(perTopic).length).toBeGreaterThanOrEqual(1);
-    // The presence of topicAId here depends on which questions $sample picked.
-    // Just assert the totals add up.
     const sumTotal = Object.values(perTopic).reduce((acc, t) => acc + t.total, 0);
     expect(sumTotal).toBe(25);
     void topicAId;
@@ -272,7 +352,7 @@ describe('quiz-sessions HTTP', () => {
     const created = await app.inject({
       method: 'POST',
       url: '/api/v1/quiz-sessions',
-      payload: { certificationId: certId, mode: 'mixed', length: 25 },
+      payload: { certificationId: certId, mode: 'mixed', feedbackMode: 'practice', length: 25 },
     });
     const createBody = QuizSessionResponseSchema.parse(created.json());
 

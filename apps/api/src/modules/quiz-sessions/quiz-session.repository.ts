@@ -1,6 +1,7 @@
 import {
   QuizSessionSchema,
   type CertificationId,
+  type FeedbackMode,
   type PerTopicScore,
   type QuestionId,
   type QuizMode,
@@ -19,6 +20,7 @@ interface QuizSessionLean {
   userId: string;
   certificationId: Types.ObjectId;
   mode: string;
+  feedbackMode: string;
   topicId?: Types.ObjectId;
   length: number;
   questionIds: Types.ObjectId[];
@@ -40,6 +42,7 @@ function toDto(lean: QuizSessionLean): QuizSession {
     userId: lean.userId,
     certificationId: lean.certificationId.toHexString(),
     mode: lean.mode,
+    feedbackMode: lean.feedbackMode,
     topicId: lean.topicId?.toHexString(),
     length: lean.length,
     questionIds: lean.questionIds.map((id) => id.toHexString()),
@@ -56,6 +59,7 @@ export interface CreateSessionInput {
   userId: string;
   certificationId: CertificationId;
   mode: QuizMode;
+  feedbackMode: FeedbackMode;
   topicId?: TopicId;
   length: 25 | 50;
   questionIds: QuestionId[];
@@ -66,6 +70,7 @@ export async function createSession(input: CreateSessionInput): Promise<QuizSess
     userId: input.userId,
     certificationId: new Types.ObjectId(input.certificationId),
     mode: input.mode,
+    feedbackMode: input.feedbackMode,
     topicId: input.topicId !== undefined ? new Types.ObjectId(input.topicId) : undefined,
     length: input.length,
     questionIds: input.questionIds.map((id) => new Types.ObjectId(id)),
