@@ -1,0 +1,401 @@
+[
+  {
+    "externalId": "az104-id-001",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which Azure service provides centralized identity management for users and groups?",
+    "choices": [
+      { "id": "A", "text": "Azure Storage" },
+      { "id": "B", "text": "Microsoft Entra ID" },
+      { "id": "C", "text": "Azure Monitor" },
+      { "id": "D", "text": "Azure Policy" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Microsoft Entra ID (formerly Azure Active Directory) is Microsoft's cloud-based identity and access management service.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/fundamentals/whatis",
+    "difficulty": "easy",
+    "tags": ["identity", "entra-id"]
+  },
+  {
+    "externalId": "az104-id-002",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "An Azure subscription is associated with how many Microsoft Entra ID tenants?",
+    "choices": [
+      { "id": "A", "text": "Zero — subscriptions don't use tenants" },
+      { "id": "B", "text": "Exactly one" },
+      { "id": "C", "text": "Up to three" },
+      { "id": "D", "text": "Unlimited" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Each Azure subscription belongs to exactly one Entra ID tenant. One tenant can host many subscriptions, but a subscription cannot span tenants.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-setup-guide/organize-resources",
+    "difficulty": "easy",
+    "tags": ["identity", "subscription", "tenant"]
+  },
+  {
+    "externalId": "az104-id-003",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which RBAC built-in role grants the ability to manage all resources in a scope but NOT to assign roles to others?",
+    "choices": [
+      { "id": "A", "text": "Owner" },
+      { "id": "B", "text": "Contributor" },
+      { "id": "C", "text": "Reader" },
+      { "id": "D", "text": "User Access Administrator" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Contributor grants full management access to resources but explicitly excludes role assignment, which is reserved for Owner and User Access Administrator.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles",
+    "difficulty": "medium",
+    "tags": ["rbac", "roles"]
+  },
+  {
+    "externalId": "az104-id-004",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "What is the purpose of an Azure Policy assignment?",
+    "choices": [
+      { "id": "A", "text": "It grants a user permission to read a resource group" },
+      { "id": "B", "text": "It enforces or audits a rule against resources within a scope" },
+      { "id": "C", "text": "It rotates a storage account access key" },
+      { "id": "D", "text": "It schedules a virtual machine to start at a specific time" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "An Azure Policy assignment binds a policy definition to a scope (management group, subscription, or resource group) where it then enforces or audits compliance.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/governance/policy/overview",
+    "difficulty": "medium",
+    "tags": ["policy", "governance"]
+  },
+  {
+    "externalId": "az104-id-005",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which resource lock type prevents both modification and deletion of a resource?",
+    "choices": [
+      { "id": "A", "text": "ReadOnly" },
+      { "id": "B", "text": "CanNotDelete" },
+      { "id": "C", "text": "Modify" },
+      { "id": "D", "text": "Audit" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "A ReadOnly lock prevents both updates and deletes. CanNotDelete only prevents deletes; updates are still allowed.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/lock-resources",
+    "difficulty": "medium",
+    "tags": ["governance", "locks"]
+  },
+  {
+    "externalId": "az104-id-006",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Tags applied to an Azure resource are inherited by which of the following by default?",
+    "choices": [
+      { "id": "A", "text": "All child resources automatically" },
+      { "id": "B", "text": "The parent resource group only" },
+      { "id": "C", "text": "Nothing — tags are not inherited automatically" },
+      { "id": "D", "text": "All resources in the same subscription" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "Tags are not inherited by default. To propagate tags from a resource group to its resources, use Azure Policy with the inherit tag policy.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/tag-resources",
+    "difficulty": "medium",
+    "tags": ["governance", "tags"]
+  },
+  {
+    "externalId": "az104-id-007",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which feature lets you require multi-factor authentication only when a user signs in from an untrusted location?",
+    "choices": [
+      { "id": "A", "text": "Azure Bastion" },
+      { "id": "B", "text": "Conditional Access" },
+      { "id": "C", "text": "Azure Sentinel" },
+      { "id": "D", "text": "Privileged Identity Management" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Conditional Access policies evaluate signals like sign-in location, device state, and risk level, and can require MFA based on those conditions.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/identity/conditional-access/overview",
+    "difficulty": "medium",
+    "tags": ["identity", "conditional-access", "mfa"]
+  },
+  {
+    "externalId": "az104-id-008",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Where in Azure can you view the effective RBAC role assignments for a specific user across all resources in a subscription?",
+    "choices": [
+      { "id": "A", "text": "Azure Cost Management" },
+      { "id": "B", "text": "Access control (IAM) blade — Check access tab" },
+      { "id": "C", "text": "Azure Monitor logs" },
+      { "id": "D", "text": "Resource Health" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "The Check access tab on the Access control (IAM) blade shows the effective permissions a specific principal has at the chosen scope.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/role-based-access-control/check-access",
+    "difficulty": "easy",
+    "tags": ["rbac"]
+  },
+  {
+    "externalId": "az104-id-009",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which type of Entra ID group can have membership rules evaluated automatically based on user attributes?",
+    "choices": [
+      { "id": "A", "text": "Assigned group" },
+      { "id": "B", "text": "Dynamic group" },
+      { "id": "C", "text": "Mail-enabled security group" },
+      { "id": "D", "text": "Distribution group" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Dynamic groups use a membership rule to add or remove users automatically based on their attributes (department, country, etc.).",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/identity/users/groups-dynamic-membership",
+    "difficulty": "medium",
+    "tags": ["identity", "groups"]
+  },
+  {
+    "externalId": "az104-id-010",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "What does an Azure management group provide?",
+    "choices": [
+      { "id": "A", "text": "A way to bill multiple subscriptions to a single payment method" },
+      { "id": "B", "text": "A scope above subscriptions for applying RBAC and policy" },
+      { "id": "C", "text": "An identity directory for guest users" },
+      { "id": "D", "text": "A network security perimeter around resource groups" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Management groups sit above subscriptions in the resource hierarchy and let you apply role assignments and policy definitions that cascade down to all subscriptions inside them.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/governance/management-groups/overview",
+    "difficulty": "medium",
+    "tags": ["governance", "management-groups"]
+  },
+  {
+    "externalId": "az104-id-011",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which command-line tool is the modern, cross-platform CLI for managing Azure resources?",
+    "choices": [
+      { "id": "A", "text": "Azure CLI (az)" },
+      { "id": "B", "text": "Azure Service Management (asm)" },
+      { "id": "C", "text": "AzCopy" },
+      { "id": "D", "text": "PowerShell ISE" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "The Azure CLI (`az`) is the modern, cross-platform command-line tool for managing Azure resources. PowerShell is also supported via the Az module.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/cli/azure/",
+    "difficulty": "easy",
+    "tags": ["tools"]
+  },
+  {
+    "externalId": "az104-id-012",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "True or false: a guest user invited to your Entra ID tenant can be assigned an RBAC role on a subscription.",
+    "choices": [
+      { "id": "A", "text": "True" },
+      { "id": "B", "text": "False — guest users can only sign in" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Guest (B2B) users are first-class principals in Entra ID and can be assigned any RBAC role, just like internal users.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/external-id/what-is-b2b",
+    "difficulty": "easy",
+    "tags": ["identity", "rbac", "b2b"]
+  },
+  {
+    "externalId": "az104-id-013",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "What is the primary purpose of Azure Privileged Identity Management (PIM)?",
+    "choices": [
+      { "id": "A", "text": "To replace Conditional Access policies" },
+      { "id": "B", "text": "To grant just-in-time, time-bound activation of privileged roles" },
+      { "id": "C", "text": "To manage device compliance" },
+      { "id": "D", "text": "To synchronize on-premises Active Directory" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "PIM lets administrators be eligible for a privileged role and activate it on demand for a limited time, optionally with approval and MFA, instead of holding the role permanently.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/id-governance/privileged-identity-management/pim-configure",
+    "difficulty": "hard",
+    "tags": ["identity", "pim"]
+  },
+  {
+    "externalId": "az104-id-014",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "When you delete a user from Entra ID, where do they go for the next 30 days?",
+    "choices": [
+      { "id": "A", "text": "They are permanently deleted immediately" },
+      { "id": "B", "text": "They go to the Deleted users area and can be restored" },
+      { "id": "C", "text": "They are moved to the Guests group" },
+      { "id": "D", "text": "They are exported to a backup file" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Deleted users are soft-deleted and remain in the Deleted users area for 30 days, during which they can be restored.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/fundamentals/users-restore",
+    "difficulty": "easy",
+    "tags": ["identity", "users"]
+  },
+  {
+    "externalId": "az104-id-015",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which Azure service synchronizes on-premises Active Directory identities to Microsoft Entra ID?",
+    "choices": [
+      { "id": "A", "text": "Microsoft Entra Connect" },
+      { "id": "B", "text": "Azure Arc" },
+      { "id": "C", "text": "Azure Site Recovery" },
+      { "id": "D", "text": "Azure Information Protection" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Microsoft Entra Connect (formerly Azure AD Connect) is the on-premises agent that syncs users, groups, and password hashes from a Windows Server Active Directory forest to Entra ID.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-azure-ad-connect",
+    "difficulty": "medium",
+    "tags": ["identity", "hybrid"]
+  },
+  {
+    "externalId": "az104-id-016",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "What is the maximum number of role assignments that can be applied at a single Azure subscription scope?",
+    "choices": [
+      { "id": "A", "text": "100" },
+      { "id": "B", "text": "500" },
+      { "id": "C", "text": "2,000" },
+      { "id": "D", "text": "Unlimited" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "Azure RBAC allows up to 2,000 role assignments per subscription. Use groups (not individual users) when nearing the limit.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/role-based-access-control/role-assignments-limit",
+    "difficulty": "hard",
+    "tags": ["rbac", "limits"]
+  },
+  {
+    "externalId": "az104-id-017",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which Azure Policy effect blocks a non-compliant resource from being created?",
+    "choices": [
+      { "id": "A", "text": "Audit" },
+      { "id": "B", "text": "AuditIfNotExists" },
+      { "id": "C", "text": "Deny" },
+      { "id": "D", "text": "Disabled" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "The Deny effect causes the resource creation or update request to fail. Audit only logs non-compliance without blocking.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effects",
+    "difficulty": "medium",
+    "tags": ["policy", "governance"]
+  },
+  {
+    "externalId": "az104-id-018",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "True or false: a resource group can span multiple Azure regions.",
+    "choices": [
+      { "id": "A", "text": "True" },
+      { "id": "B", "text": "False — a resource group has a single region" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "A resource group has a single region (its metadata is stored there), but the resources inside it can be deployed to any region.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/azure-resource-manager/management/manage-resource-groups-portal",
+    "difficulty": "easy",
+    "tags": ["governance", "resource-groups"]
+  },
+  {
+    "externalId": "az104-id-019",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "What is the difference between a built-in RBAC role and a custom RBAC role?",
+    "choices": [
+      { "id": "A", "text": "Built-in roles cannot be assigned to groups; custom roles can" },
+      {
+        "id": "B",
+        "text": "Built-in roles are defined by Microsoft and updated automatically; custom roles are user-defined"
+      },
+      { "id": "C", "text": "Custom roles are free; built-in roles incur a per-assignment cost" },
+      { "id": "D", "text": "There is no difference — they are interchangeable" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Built-in roles are maintained by Microsoft. Custom roles let you define your own permission set when no built-in role fits your needs.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/role-based-access-control/custom-roles",
+    "difficulty": "easy",
+    "tags": ["rbac", "roles"]
+  },
+  {
+    "externalId": "az104-id-020",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which Entra ID feature lets external partners sign in to your tenant using their own corporate identities?",
+    "choices": [
+      { "id": "A", "text": "B2B collaboration" },
+      { "id": "B", "text": "B2C consumer accounts" },
+      { "id": "C", "text": "Pass-through authentication" },
+      { "id": "D", "text": "Self-service password reset" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "B2B (business-to-business) collaboration invites external partners as guest users; they sign in with their existing identity provider.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/external-id/what-is-b2b",
+    "difficulty": "medium",
+    "tags": ["identity", "b2b"]
+  },
+  {
+    "externalId": "az104-id-021",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which built-in role is required to assign other RBAC roles to users?",
+    "choices": [
+      { "id": "A", "text": "Reader" },
+      { "id": "B", "text": "Contributor" },
+      { "id": "C", "text": "Owner" },
+      { "id": "D", "text": "Network Contributor" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "Owner (or User Access Administrator) is required to assign roles to other principals. Contributor is full-control on resources but cannot grant access.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/role-based-access-control/built-in-roles",
+    "difficulty": "easy",
+    "tags": ["rbac"]
+  },
+  {
+    "externalId": "az104-id-022",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which Azure governance service helps you organize subscriptions into a hierarchy for unified policy and access?",
+    "choices": [
+      { "id": "A", "text": "Azure Blueprints" },
+      { "id": "B", "text": "Management groups" },
+      { "id": "C", "text": "Resource Graph" },
+      { "id": "D", "text": "Cost Management" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Management groups create a hierarchy above subscriptions so you can apply policy and RBAC once at a high level and have it cascade down.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/governance/management-groups/overview",
+    "difficulty": "medium",
+    "tags": ["governance", "management-groups"]
+  },
+  {
+    "externalId": "az104-id-023",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which sign-in option in Entra ID Connect sends the password hash of the user's hash to Entra ID?",
+    "choices": [
+      { "id": "A", "text": "Federation with AD FS" },
+      { "id": "B", "text": "Pass-through authentication" },
+      { "id": "C", "text": "Password hash synchronization" },
+      { "id": "D", "text": "Seamless single sign-on" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "Password hash synchronization syncs a hash of the user's on-premises password hash to Entra ID, so users can authenticate to cloud services with the same password.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/identity/hybrid/connect/whatis-phs",
+    "difficulty": "hard",
+    "tags": ["identity", "hybrid"]
+  },
+  {
+    "externalId": "az104-id-024",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "What is the smallest scope at which an RBAC role assignment can be applied?",
+    "choices": [
+      { "id": "A", "text": "Management group" },
+      { "id": "B", "text": "Subscription" },
+      { "id": "C", "text": "Resource group" },
+      { "id": "D", "text": "Individual resource" }
+    ],
+    "correctChoiceIds": ["D"],
+    "explanation": "RBAC role assignments can be made at the management group, subscription, resource group, or individual resource level. The resource is the most granular.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/role-based-access-control/scope-overview",
+    "difficulty": "easy",
+    "tags": ["rbac"]
+  },
+  {
+    "externalId": "az104-id-025",
+    "topic": "manage-azure-identities-and-governance",
+    "prompt": "Which Entra ID feature lets users reset their own passwords without involving an administrator?",
+    "choices": [
+      { "id": "A", "text": "Self-service password reset (SSPR)" },
+      { "id": "B", "text": "Conditional Access" },
+      { "id": "C", "text": "Privileged Identity Management" },
+      { "id": "D", "text": "Identity Protection" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Self-service password reset (SSPR) lets users unlock their account or change their password on their own using verification methods like phone or email.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/entra/identity/authentication/concept-sspr-howitworks",
+    "difficulty": "easy",
+    "tags": ["identity", "sspr"]
+  }
+]

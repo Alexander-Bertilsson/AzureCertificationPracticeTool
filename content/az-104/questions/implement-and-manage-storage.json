@@ -1,0 +1,401 @@
+[
+  {
+    "externalId": "az104-st-001",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which storage redundancy option keeps three copies in a single datacenter?",
+    "choices": [
+      { "id": "A", "text": "LRS (Locally redundant storage)" },
+      { "id": "B", "text": "ZRS (Zone-redundant storage)" },
+      { "id": "C", "text": "GRS (Geo-redundant storage)" },
+      { "id": "D", "text": "RA-GZRS" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "LRS replicates your data three times within a single physical location in the primary region. It's the cheapest option but does not protect against datacenter or regional outages.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy",
+    "difficulty": "easy",
+    "tags": ["storage", "redundancy"]
+  },
+  {
+    "externalId": "az104-st-002",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which storage service should you use for unstructured object data like images and backups?",
+    "choices": [
+      { "id": "A", "text": "Azure Files" },
+      { "id": "B", "text": "Azure Queue Storage" },
+      { "id": "C", "text": "Azure Blob Storage" },
+      { "id": "D", "text": "Azure Table Storage" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "Blob (Binary Large Object) storage is designed for massive amounts of unstructured object data such as text or binary files, images, video, and backups.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction",
+    "difficulty": "easy",
+    "tags": ["storage", "blob"]
+  },
+  {
+    "externalId": "az104-st-003",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which access tier offers the lowest storage cost but the highest retrieval cost and longest retrieval latency for blobs?",
+    "choices": [
+      { "id": "A", "text": "Hot" },
+      { "id": "B", "text": "Cool" },
+      { "id": "C", "text": "Cold" },
+      { "id": "D", "text": "Archive" }
+    ],
+    "correctChoiceIds": ["D"],
+    "explanation": "The Archive tier is the lowest-cost option for storing rarely accessed data. Retrieval requires rehydration which can take hours and incurs a per-GB read cost.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview",
+    "difficulty": "medium",
+    "tags": ["storage", "access-tiers"]
+  },
+  {
+    "externalId": "az104-st-004",
+    "topic": "implement-and-manage-storage",
+    "prompt": "What does a Shared Access Signature (SAS) token allow you to do?",
+    "choices": [
+      { "id": "A", "text": "Replace the storage account access keys permanently" },
+      { "id": "B", "text": "Grant time-limited, scoped access to a storage resource" },
+      { "id": "C", "text": "Migrate data between regions" },
+      { "id": "D", "text": "Encrypt data at rest" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "A SAS is a signed URI that grants restricted access rights to Azure Storage resources. You control which permissions, services, IP ranges, and time window are allowed.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-sas-overview",
+    "difficulty": "medium",
+    "tags": ["storage", "sas", "security"]
+  },
+  {
+    "externalId": "az104-st-005",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which storage account type should you choose for general-purpose use with blob, file, queue, and table services?",
+    "choices": [
+      { "id": "A", "text": "BlobStorage (legacy)" },
+      { "id": "B", "text": "General-purpose v1 (GPv1)" },
+      { "id": "C", "text": "General-purpose v2 (GPv2)" },
+      { "id": "D", "text": "BlockBlobStorage" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "General-purpose v2 (GPv2) is the recommended storage account type for most scenarios. It supports all four data services and the latest features (access tiers, lifecycle management, etc.).",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-account-overview",
+    "difficulty": "easy",
+    "tags": ["storage", "account-types"]
+  },
+  {
+    "externalId": "az104-st-006",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which tool is best suited for transferring large amounts of data into Azure Blob Storage from the command line?",
+    "choices": [
+      { "id": "A", "text": "Azure Storage Explorer" },
+      { "id": "B", "text": "AzCopy" },
+      { "id": "C", "text": "Azure Backup" },
+      { "id": "D", "text": "Azure CLI az storage blob upload" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "AzCopy is a command-line utility designed specifically for high-throughput, parallel data transfer to and from Azure Storage. It outperforms az CLI for bulk transfers.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-v10",
+    "difficulty": "medium",
+    "tags": ["storage", "tools", "azcopy"]
+  },
+  {
+    "externalId": "az104-st-007",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which type of storage account replication offers the highest durability with reads from a secondary region?",
+    "choices": [
+      { "id": "A", "text": "LRS" },
+      { "id": "B", "text": "ZRS" },
+      { "id": "C", "text": "GRS" },
+      { "id": "D", "text": "RA-GZRS" }
+    ],
+    "correctChoiceIds": ["D"],
+    "explanation": "RA-GZRS combines zone-redundant storage in the primary region with asynchronous geo-replication and read access to the secondary region. It's the highest-durability option.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-redundancy",
+    "difficulty": "hard",
+    "tags": ["storage", "redundancy"]
+  },
+  {
+    "externalId": "az104-st-008",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Azure Files supports which two file-sharing protocols?",
+    "choices": [
+      { "id": "A", "text": "SMB and NFS" },
+      { "id": "B", "text": "FTP and SFTP" },
+      { "id": "C", "text": "HTTP and HTTPS only" },
+      { "id": "D", "text": "iSCSI and FC" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Azure Files exposes shares over SMB (versions 2.1, 3.0, 3.1.1) for Windows/macOS/Linux and over NFS 4.1 (premium tier only) for Linux workloads.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/files/storage-files-introduction",
+    "difficulty": "medium",
+    "tags": ["storage", "files"]
+  },
+  {
+    "externalId": "az104-st-009",
+    "topic": "implement-and-manage-storage",
+    "prompt": "What is the purpose of a storage account lifecycle management policy?",
+    "choices": [
+      { "id": "A", "text": "Enforce naming conventions on new containers" },
+      { "id": "B", "text": "Move blobs between access tiers or delete them based on age" },
+      { "id": "C", "text": "Backup blobs to a different region" },
+      { "id": "D", "text": "Generate SAS tokens automatically" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Lifecycle management lets you define rules that transition blobs to cooler access tiers or delete them after a configured number of days, reducing cost.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/lifecycle-management-overview",
+    "difficulty": "medium",
+    "tags": ["storage", "lifecycle"]
+  },
+  {
+    "externalId": "az104-st-010",
+    "topic": "implement-and-manage-storage",
+    "prompt": "True or false: blob soft delete protects against accidental deletion of containers AND blobs.",
+    "choices": [
+      { "id": "A", "text": "True" },
+      { "id": "B", "text": "False" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Blob soft delete protects both individual blobs and containers (when container soft delete is enabled). Soft-deleted items are recoverable for the configured retention period.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/soft-delete-blob-overview",
+    "difficulty": "medium",
+    "tags": ["storage", "soft-delete"]
+  },
+  {
+    "externalId": "az104-st-011",
+    "topic": "implement-and-manage-storage",
+    "prompt": "How are storage account access keys rotated safely without downtime?",
+    "choices": [
+      {
+        "id": "A",
+        "text": "Switch all clients to key2, then regenerate key1, then switch all clients back to key1, then regenerate key2"
+      },
+      { "id": "B", "text": "Regenerate both keys at the same time" },
+      { "id": "C", "text": "Delete the storage account and create a new one" },
+      { "id": "D", "text": "Disable access keys before regenerating" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Each storage account has two keys precisely so you can rotate them without downtime: move clients to key2, regenerate key1, move clients back to key1, regenerate key2.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-account-keys-manage",
+    "difficulty": "hard",
+    "tags": ["storage", "security", "access-keys"]
+  },
+  {
+    "externalId": "az104-st-012",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which service can use a storage account as the backend for static website hosting?",
+    "choices": [
+      { "id": "A", "text": "Azure App Service" },
+      { "id": "B", "text": "Azure Blob Storage with Static website enabled" },
+      { "id": "C", "text": "Azure Functions" },
+      { "id": "D", "text": "Azure CDN only" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Enabling Static website on a blob storage account creates a `$web` container and a public endpoint that serves the contents as a static site.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blob-static-website",
+    "difficulty": "medium",
+    "tags": ["storage", "static-website"]
+  },
+  {
+    "externalId": "az104-st-013",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which Azure feature provides a centralized way to mount Azure file shares from multiple Windows servers and cache them locally?",
+    "choices": [
+      { "id": "A", "text": "Azure File Sync" },
+      { "id": "B", "text": "Storage Explorer" },
+      { "id": "C", "text": "Azure Backup" },
+      { "id": "D", "text": "Azure Migrate" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Azure File Sync turns on-premises Windows file servers into a fast cache for an Azure file share, providing local performance with centralized cloud storage.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/file-sync/file-sync-introduction",
+    "difficulty": "hard",
+    "tags": ["storage", "files", "file-sync"]
+  },
+  {
+    "externalId": "az104-st-014",
+    "topic": "implement-and-manage-storage",
+    "prompt": "What does a stored access policy on a SAS provide?",
+    "choices": [
+      { "id": "A", "text": "It encrypts the SAS token at rest" },
+      { "id": "B", "text": "It lets you revoke or modify a SAS without regenerating account keys" },
+      { "id": "C", "text": "It increases the SAS bandwidth quota" },
+      { "id": "D", "text": "It logs all SAS usage to Azure Monitor" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "A stored access policy associates a server-side definition (permissions, start/expiry) with a SAS. You can update or revoke the policy to instantly affect every SAS that references it.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/storageservices/define-stored-access-policy",
+    "difficulty": "hard",
+    "tags": ["storage", "sas", "security"]
+  },
+  {
+    "externalId": "az104-st-015",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which type of blob is best suited for storing virtual machine VHD files?",
+    "choices": [
+      { "id": "A", "text": "Block blobs" },
+      { "id": "B", "text": "Append blobs" },
+      { "id": "C", "text": "Page blobs" },
+      { "id": "D", "text": "Snapshot blobs" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "Page blobs are optimized for random read/write operations and are the underlying storage for unmanaged VM disks (VHDs).",
+    "sourceUrl": "https://learn.microsoft.com/en-us/rest/api/storageservices/understanding-block-blobs--append-blobs--and-page-blobs",
+    "difficulty": "medium",
+    "tags": ["storage", "blob-types"]
+  },
+  {
+    "externalId": "az104-st-016",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which Azure feature allows you to grant a Microsoft Entra identity access to a blob container without using account keys or SAS tokens?",
+    "choices": [
+      { "id": "A", "text": "Storage Account Contributor" },
+      { "id": "B", "text": "Storage Blob Data Contributor (RBAC)" },
+      { "id": "C", "text": "Reader" },
+      { "id": "D", "text": "Owner only" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Storage Blob Data Contributor is a data-plane RBAC role that grants read/write/delete on blob data via Entra ID authentication, eliminating the need for account keys.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/authorize-access-azure-active-directory",
+    "difficulty": "medium",
+    "tags": ["storage", "rbac", "security"]
+  },
+  {
+    "externalId": "az104-st-017",
+    "topic": "implement-and-manage-storage",
+    "prompt": "What is the maximum size of a single Azure file share by default?",
+    "choices": [
+      { "id": "A", "text": "5 TiB" },
+      { "id": "B", "text": "100 TiB (with large file shares enabled)" },
+      { "id": "C", "text": "1 PiB" },
+      { "id": "D", "text": "Unlimited" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Standard SMB file shares default to 5 TiB but can be expanded to 100 TiB by enabling the large file shares feature on the storage account.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/files/storage-files-scale-targets",
+    "difficulty": "hard",
+    "tags": ["storage", "files", "limits"]
+  },
+  {
+    "externalId": "az104-st-018",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which feature lets you make a storage account accessible only from specific virtual networks?",
+    "choices": [
+      { "id": "A", "text": "Storage firewalls and virtual network rules" },
+      { "id": "B", "text": "RBAC role assignments" },
+      { "id": "C", "text": "Lifecycle management policies" },
+      { "id": "D", "text": "Soft delete" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "The Networking blade on a storage account lets you restrict public access to selected virtual networks (via service endpoints) or specific IP ranges, blocking everything else.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-network-security",
+    "difficulty": "medium",
+    "tags": ["storage", "networking", "security"]
+  },
+  {
+    "externalId": "az104-st-019",
+    "topic": "implement-and-manage-storage",
+    "prompt": "True or false: customer-managed keys can be used to encrypt data at rest in an Azure Storage account.",
+    "choices": [
+      { "id": "A", "text": "True" },
+      { "id": "B", "text": "False — only Microsoft-managed keys are supported" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Storage Service Encryption (SSE) supports customer-managed keys (CMK) stored in Azure Key Vault, in addition to the default Microsoft-managed keys.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/customer-managed-keys-overview",
+    "difficulty": "medium",
+    "tags": ["storage", "encryption", "security"]
+  },
+  {
+    "externalId": "az104-st-020",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which service is used to import very large datasets into Azure Storage by physically shipping a disk array?",
+    "choices": [
+      { "id": "A", "text": "AzCopy" },
+      { "id": "B", "text": "Azure Import/Export" },
+      { "id": "C", "text": "Azure ExpressRoute" },
+      { "id": "D", "text": "Azure Data Box Disk only" }
+    ],
+    "correctChoiceIds": ["B"],
+    "explanation": "Azure Import/Export lets you ship encrypted hard drives to a Microsoft datacenter for direct ingest into a storage account when network transfer is impractical.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/import-export/storage-import-export-service",
+    "difficulty": "hard",
+    "tags": ["storage", "data-transfer"]
+  },
+  {
+    "externalId": "az104-st-021",
+    "topic": "implement-and-manage-storage",
+    "prompt": "What happens when blob versioning is enabled on a container?",
+    "choices": [
+      { "id": "A", "text": "Every write creates an immutable previous version of the blob" },
+      { "id": "B", "text": "Blobs are automatically archived after 30 days" },
+      { "id": "C", "text": "All blobs become read-only" },
+      { "id": "D", "text": "The container is replicated to a secondary region" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Versioning automatically maintains previous versions of a blob whenever it is modified or deleted, providing point-in-time recovery.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/versioning-overview",
+    "difficulty": "medium",
+    "tags": ["storage", "versioning"]
+  },
+  {
+    "externalId": "az104-st-022",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which feature lets you replicate blobs from one storage account to another asynchronously?",
+    "choices": [
+      { "id": "A", "text": "Object replication" },
+      { "id": "B", "text": "Geo-redundant storage" },
+      { "id": "C", "text": "AzCopy sync" },
+      { "id": "D", "text": "Azure Backup" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Object replication asynchronously copies block blobs from a source storage account to a destination based on container-level replication rules. Useful for cross-region or cross-tenant copying.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/object-replication-overview",
+    "difficulty": "hard",
+    "tags": ["storage", "replication"]
+  },
+  {
+    "externalId": "az104-st-023",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which tool lets you manage Azure Storage from a desktop GUI on Windows, macOS, or Linux?",
+    "choices": [
+      { "id": "A", "text": "Azure Storage Explorer" },
+      { "id": "B", "text": "Azure CLI" },
+      { "id": "C", "text": "Azure portal" },
+      { "id": "D", "text": "PowerShell" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Azure Storage Explorer is a free, cross-platform desktop application for managing storage accounts, browsing blobs, files, queues, and tables, and generating SAS tokens.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/common/storage-explorer-overview",
+    "difficulty": "easy",
+    "tags": ["storage", "tools"]
+  },
+  {
+    "externalId": "az104-st-024",
+    "topic": "implement-and-manage-storage",
+    "prompt": "Which characteristic distinguishes a hot access tier from a cool access tier?",
+    "choices": [
+      { "id": "A", "text": "Hot has higher storage cost but lower access cost" },
+      { "id": "B", "text": "Cool has higher storage cost but lower access cost" },
+      { "id": "C", "text": "Hot is geo-replicated; cool is not" },
+      { "id": "D", "text": "Hot supports versioning; cool does not" }
+    ],
+    "correctChoiceIds": ["A"],
+    "explanation": "Hot tier optimizes for frequent access (lower per-transaction cost, higher per-GB cost). Cool tier inverts the trade-off — cheaper to store, more expensive to read or write.",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/access-tiers-overview",
+    "difficulty": "easy",
+    "tags": ["storage", "access-tiers"]
+  },
+  {
+    "externalId": "az104-st-025",
+    "topic": "implement-and-manage-storage",
+    "prompt": "What is the maximum size of a single block blob in Azure?",
+    "choices": [
+      { "id": "A", "text": "5 GiB" },
+      { "id": "B", "text": "100 GiB" },
+      { "id": "C", "text": "190.7 TiB" },
+      { "id": "D", "text": "Unlimited" }
+    ],
+    "correctChoiceIds": ["C"],
+    "explanation": "A single block blob can be up to 190.7 TiB (50,000 blocks × 4,000 MiB per block in modern accounts).",
+    "sourceUrl": "https://learn.microsoft.com/en-us/azure/storage/blobs/scalability-targets",
+    "difficulty": "hard",
+    "tags": ["storage", "limits"]
+  }
+]

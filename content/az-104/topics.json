@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "manage-azure-identities-and-governance",
+    "title": "Manage Azure identities and governance",
+    "order": 1,
+    "description": "Microsoft Entra ID, users and groups, role-based access control, Azure Policy, resource locks, and tags."
+  },
+  {
+    "slug": "implement-and-manage-storage",
+    "title": "Implement and manage storage",
+    "order": 2,
+    "description": "Azure Storage accounts, blob containers, file shares, access keys, shared access signatures, and lifecycle management."
+  }
+]
