@@ -29,6 +29,7 @@ function toPresented(question: Question): PresentedQuestion {
     topicId: question.topicId,
     prompt: question.prompt,
     choices: question.choices,
+    questionType: question.correctChoiceIds.length > 1 ? 'multiple' : 'single',
     difficulty: question.difficulty,
     tags: question.tags,
   };

@@ -101,11 +101,15 @@ export function QuizRunnerView({
   }
 
   const isRevealed = state.lastResult !== null;
-  const toggleChoice = (id: ChoiceId): void => {
+  const isSingleSelect = state.question.questionType === 'single';
+  const pickChoice = (id: ChoiceId): void => {
     if (isRevealed) return;
-    setSelected((current) =>
-      current.includes(id) ? current.filter((c) => c !== id) : [...current, id],
-    );
+    setSelected((current) => {
+      if (isSingleSelect) {
+        return current.includes(id) ? [] : [id];
+      }
+      return current.includes(id) ? current.filter((c) => c !== id) : [...current, id];
+    });
   };
 
   const handleSubmit = (): void => {
@@ -183,6 +187,9 @@ export function QuizRunnerView({
         <Card>
           <Stack gap="md">
             <Heading level={2}>{state.question.prompt}</Heading>
+            <BodyText variant="muted">
+              {isSingleSelect ? 'Pick one answer.' : 'Select all that apply.'}
+            </BodyText>
             <Stack gap="sm">
               {state.question.choices.map((choice) => {
                 const isSelected = selected.includes(choice.id);
@@ -190,12 +197,16 @@ export function QuizRunnerView({
                   <Pressable
                     key={choice.id}
                     onPress={() => {
-                      toggleChoice(choice.id);
+                      pickChoice(choice.id);
                     }}
                     style={choiceStyle(theme, isSelected, isRevealed)}
                     testID={`choice-${choice.id}`}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked: isSelected, disabled: isRevealed }}
+                    accessibilityRole={isSingleSelect ? 'radio' : 'checkbox'}
+                    accessibilityState={
+                      isSingleSelect
+                        ? { selected: isSelected, disabled: isRevealed }
+                        : { checked: isSelected, disabled: isRevealed }
+                    }
                   >
                     <BodyText>
                       {choice.id}. {choice.text}

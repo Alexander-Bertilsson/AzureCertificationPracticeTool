@@ -13,6 +13,16 @@ export type ChoiceId = z.infer<typeof ChoiceIdSchema>;
 export const QuestionDifficultySchema = z.enum(['easy', 'medium', 'hard']);
 export type QuestionDifficulty = z.infer<typeof QuestionDifficultySchema>;
 
+/**
+ * Whether a question expects exactly one answer (render as radio buttons) or
+ * may have more than one correct answer (render as checkboxes). Derived from
+ * `correctChoiceIds.length` on the server so the field is always correct, but
+ * exposed on `PresentedQuestion` so the quiz runner can pick the right input
+ * affordance without needing the answer key.
+ */
+export const QuestionTypeSchema = z.enum(['single', 'multiple']);
+export type QuestionType = z.infer<typeof QuestionTypeSchema>;
+
 export const QuestionChoiceSchema = z.object({
   id: ChoiceIdSchema,
   text: z.string().min(1),
@@ -70,6 +80,7 @@ export const PresentedQuestionSchema = z.object({
   topicId: TopicIdSchema,
   prompt: z.string(),
   choices: z.array(QuestionChoiceSchema),
+  questionType: QuestionTypeSchema,
   difficulty: QuestionDifficultySchema,
   tags: z.array(z.string()),
 });

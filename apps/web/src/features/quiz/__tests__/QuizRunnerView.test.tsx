@@ -11,7 +11,7 @@ import { QuizRunnerView, type QuizRunnerViewState } from '../QuizRunnerView';
 
 const QUESTION_ID = '507f1f77bcf86cd799439041' as QuestionId;
 
-function makeQuestion(): PresentedQuestion {
+function makeQuestion(overrides: Partial<PresentedQuestion> = {}): PresentedQuestion {
   return {
     id: QUESTION_ID,
     certificationId: '507f1f77bcf86cd799439011' as CertificationId,
@@ -23,8 +23,10 @@ function makeQuestion(): PresentedQuestion {
       { id: 'C', text: 'Azure Monitor' },
       { id: 'D', text: 'Azure Functions' },
     ],
+    questionType: 'single',
     difficulty: 'easy',
     tags: ['identity'],
+    ...overrides,
   };
 }
 
@@ -46,7 +48,7 @@ function makeReadyState(
 }
 
 describe('QuizRunnerView', () => {
-  it('submits the selected choices when the submit button is pressed', () => {
+  it('submits the selected choice for a single-answer question', () => {
     const onSubmitAnswer = jest.fn();
 
     const { getByTestId } = render(
@@ -62,6 +64,49 @@ describe('QuizRunnerView', () => {
     fireEvent.press(getByTestId('submit-answer-button'));
 
     expect(onSubmitAnswer).toHaveBeenCalledWith(['B']);
+  });
+
+  it('treats a single-answer question as a radio group', () => {
+    const onSubmitAnswer = jest.fn();
+
+    const { getByTestId } = render(
+      <QuizRunnerView
+        state={makeReadyState()}
+        onSubmitAnswer={onSubmitAnswer}
+        onNext={jest.fn()}
+        onFinish={jest.fn()}
+      />,
+    );
+
+    fireEvent.press(getByTestId('choice-A'));
+    fireEvent.press(getByTestId('choice-C'));
+    fireEvent.press(getByTestId('submit-answer-button'));
+
+    expect(onSubmitAnswer).toHaveBeenCalledTimes(1);
+    expect(onSubmitAnswer).toHaveBeenCalledWith(['C']);
+  });
+
+  it('allows multiple choices on a multiple-answer question', () => {
+    const onSubmitAnswer = jest.fn();
+
+    const { getByTestId, getByText } = render(
+      <QuizRunnerView
+        state={makeReadyState({
+          question: makeQuestion({ questionType: 'multiple' }),
+        })}
+        onSubmitAnswer={onSubmitAnswer}
+        onNext={jest.fn()}
+        onFinish={jest.fn()}
+      />,
+    );
+
+    expect(getByText('Select all that apply.')).toBeTruthy();
+
+    fireEvent.press(getByTestId('choice-A'));
+    fireEvent.press(getByTestId('choice-C'));
+    fireEvent.press(getByTestId('submit-answer-button'));
+
+    expect(onSubmitAnswer).toHaveBeenCalledWith(['A', 'C']);
   });
 
   it('shows the next button after a practice-mode result is revealed', () => {
